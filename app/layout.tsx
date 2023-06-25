@@ -15,9 +15,6 @@ export const metadata: Metadata = {
 	But ByteChat goes beyond just discussions. We understand the importance of hands-on learning and practice, which is why we offer daily programming problems to keep you challenged and sharpen your skills. Our carefully curated problem sets cover a wide spectrum of difficulty levels, ensuring there's something for everyone, from beginners to experienced coders. Solve the problems, showcase your solutions, and learn from others to foster growth in your programming journey.
 
 	Join ByteChat today and unlock a world of possibilities. Connect with programmers from all walks of life, broaden your knowledge, and become part of a thriving community that celebrates the art of coding. Embrace the power of collaboration, inspiration, and continuous learning on ByteChat, where the bytes of knowledge flow freely, and the programming community thrives!`,
-	icons: {
-		icon: "./favicon.jpg",
-	},
 };
 
 export default function RootLayout({
@@ -26,8 +23,8 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="en">
-			<body className={inter.className}>
+		<html lang="en" className="dark">
+			<body className={`${inter.className} dark:bg-bg-dark`}>
 				{/* <Provider store={store}> */}
 				{children}
 				{/* </Provider> */}
