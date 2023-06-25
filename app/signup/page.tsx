@@ -36,6 +36,13 @@ const SignUp = () => {
 					</div>
 
 					<div className="flex flex-col max-w-md mb-5">
+						<label className="py-3">Username</label>
+						<input
+							className="px-2 py-3 rounded-md focus:outline-[#c766ae]"
+							placeholder="Username..."
+							type="text"
+						/>
+
 						<label className="py-3">Email</label>
 						<input
 							className="px-2 py-3 rounded-md focus:outline-[#c766ae]"
@@ -47,6 +54,13 @@ const SignUp = () => {
 						<input
 							className="px-2 py-3 rounded-md focus:outline-[#c766ae]"
 							placeholder="Password..."
+							type="password"
+						/>
+
+						<label className="py-3">Confirm Password</label>
+						<input
+							className="px-2 py-3 rounded-md focus:outline-[#c766ae]"
+							placeholder="Confirm Password"
 							type="password"
 						/>
 					</div>
