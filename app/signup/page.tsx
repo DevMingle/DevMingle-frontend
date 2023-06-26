@@ -2,6 +2,7 @@ import React from "react";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import Image from "next/image";
+import { github, google } from "@/src/utils/oAuth";
 
 const SignUp = () => {
 	return (
@@ -24,12 +25,12 @@ const SignUp = () => {
 							<FcGoogle />
 						</button>
 
-						<button className="border hidden hover:scale-110 transition lg:flex items-center px-3 py-2 border-gray-500 rounded-lg">
+						<button onClick={github} className="border hidden hover:scale-110 transition lg:flex items-center px-3 py-2 border-gray-500 rounded-lg">
 							<AiFillGithub className="mr-1" />
 							Sign Up With Github
 						</button>
 
-						<button className="border hidden hover:scale-110 transition lg:flex items-center px-3 py-2 border-gray-500 rounded-lg">
+						<button onClick={google} className="border hidden hover:scale-110 transition lg:flex items-center px-3 py-2 border-gray-500 rounded-lg">
 							<FcGoogle className="mr-1" />
 							Sign Up With Google
 						</button>
