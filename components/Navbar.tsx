@@ -38,10 +38,7 @@ const NavItem = ({
 	delay: number;
 }) => {
 	return (
-		<Link
-			href={href}
-			className="hover:text-slate-200 hover:-translate-y-1 duration-300"
-		>
+		<Link href={href} className="group transition duration-300">
 			<motion.div
 				initial={{ y: -10, opacity: 0 }}
 				animate={{ y: 0, opacity: 1 }}
@@ -49,12 +46,13 @@ const NavItem = ({
 			>
 				{name}
 			</motion.div>
+			<span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-purple-500"></span>
 		</Link>
 	);
 };
 
 const Navbar = () => (
-	<section className="dark:text-text-dark dark:bg-dark-nav body-font">
+	<section className="dark:bg-dark-nav sticky top-0 z-50 shadow-lg">
 		<div className="container mx-auto flex flex-wrap px-8 py-6 flex-row items-center justify-center md:justify-normal gap-6">
 			<Link
 				href="/"
@@ -68,7 +66,7 @@ const Navbar = () => (
 					<Image src={Logo} width={50} height={30} alt="Loading..." />
 				</motion.div>
 				<motion.span
-					className="text-xl font-bold"
+					className="text-2xl font-bold nav-title"
 					initial={{ scale: 0.5 }}
 					animate={{ scale: 1 }}
 					transition={{ duration: 0.5 }}
@@ -90,7 +88,7 @@ const Navbar = () => (
 			</nav>
 			<Link href="/signup">
 				<button className="btn border-primary-btn hover:border-primary-btn hover:bg-primary-btn duration-300">
-					Sign In
+					Sign Up
 				</button>
 			</Link>
 			<button className="absolute px-4 py-2 md:hidden top-7 right-4">

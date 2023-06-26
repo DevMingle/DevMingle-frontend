@@ -1,6 +1,8 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { Metadata } from "next";
+import Navbar from "@component/Navbar";
+
 // import { Provider } from "react-redux";
 // import store from "@src/store/store.ts";
 
@@ -24,8 +26,11 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en" className="dark">
-			<body className={`${inter.className} dark:bg-bg-dark`}>
+			<body
+				className={`${inter.className} dark:bg-bg-dark dark:text-text-dark`}
+			>
 				{/* <Provider store={store}> */}
+				<Navbar />
 				{children}
 				{/* </Provider> */}
 			</body>

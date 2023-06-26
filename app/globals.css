@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.nav-title {
+    background: linear-gradient(to right, #7D01C2, #D805AE);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
