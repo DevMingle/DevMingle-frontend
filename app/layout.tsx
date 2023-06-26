@@ -1,9 +1,14 @@
+"use client"
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { Metadata } from "next";
 import Navbar from "@component/Navbar";
+<<<<<<< HEAD
 import Footer from "@component/Footer";
 
+=======
+import { useEffect } from "react";
+>>>>>>> ab4c8be99779e45448ce0dcb1a062ea996f6f152
 // import { Provider } from "react-redux";
 // import store from "@src/store/store.ts";
 
@@ -25,6 +30,22 @@ export default function RootLayout({
 }: {
 	children: React.ReactNode;
 }) {
+	useEffect(() => {
+		const getUser = async () => {
+		  const res = await fetch("http://localhost:8000/api/auth/check", {
+			method: "GET",
+			credentials: "include",
+			headers: {
+			  Accept: "application/json",
+			  "Content-type": "application/json",
+			  "Access-Control-Allow-Credentials": "true",
+			},
+		  });
+		  const data = await res.json();
+		  console.log(data);
+		};
+		getUser();
+	  });
 	return (
 		<html lang="en" className="dark">
 			<body

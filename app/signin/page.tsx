@@ -1,8 +1,9 @@
+"use client"
 import React from "react";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import Image from "next/image";
-
+import { google, github } from "@/src/utils/oAuth";
 const SignIn = () => {
 	return (
 		<main className="p-16 bg-[#e0daf1] text-[#040307] min-h-screen">
@@ -24,12 +25,12 @@ const SignIn = () => {
 							<FcGoogle />
 						</button>
 
-						<button className="border hidden hover:scale-110 transition lg:flex items-center px-3 py-2 border-gray-500 rounded-lg">
+						<button onClick={github} className="border hidden hover:scale-110 transition lg:flex items-center px-3 py-2 border-gray-500 rounded-lg">
 							<AiFillGithub className="mr-1" />
 							Sign In With Github
 						</button>
 
-						<button className="border hidden hover:scale-110 transition lg:flex items-center px-3 py-2 border-gray-500 rounded-lg">
+						<button onClick={google} className="border hidden hover:scale-110 transition lg:flex items-center px-3 py-2 border-gray-500 rounded-lg">
 							<FcGoogle className="mr-1" />
 							Sign In With Google
 						</button>
