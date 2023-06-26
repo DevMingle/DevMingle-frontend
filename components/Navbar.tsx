@@ -63,7 +63,7 @@ const Navbar = () => (
 					animate={{ opacity: 1, scale: 1 }}
 					transition={{ duration: 0.5 }}
 				>
-					<Image src={Logo} width={50} height={30} alt="Loading..." />
+					<Image src={Logo} width={60} height={30} alt="Loading..." />
 				</motion.div>
 				<motion.span
 					className="text-2xl font-bold nav-title"
@@ -87,9 +87,14 @@ const Navbar = () => (
 				})}
 			</nav>
 			<Link href="/signup">
-				<button className="btn border-primary-btn hover:border-primary-btn hover:bg-primary-btn duration-300">
+				<motion.button
+					className="btn border-primary-btn hover:border-primary-btn hover:bg-primary-btn duration-300 hidden md:block"
+					initial={{ opacity: 0, scale: 0.8 }}
+					animate={{ opacity: 1, scale: 1 }}
+					transition={{ duration: 0.5 }}
+				>
 					Sign Up
-				</button>
+				</motion.button>
 			</Link>
 			<button className="absolute px-4 py-2 md:hidden top-7 right-4">
 				nav

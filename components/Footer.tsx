@@ -1,71 +1,77 @@
+"use client";
 import React from "react";
+import { Logo } from "@/public";
+import Image from "next/image";
 import Link from "next/link";
+import { AiFillGithub } from "react-icons/ai";
 
-const Footer = () => (
-	<div id="footer" className="text-white bg-[#222222] relative bottom-0 w-full">
-		<div className="container mx-auto flex md:items-center space-y-10 md:space-y-0 flex-col md:flex-row md:justify-between px-10 py-10">
-			<div className="max-w-md">
-				<h1 className="mb-2 text-[#efe0fe] font-bold">About</h1>
-				<p className="opacity-50">
-					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic placeat
-					deleniti cum magni iusto commodi quasi tempora ad fugit
-					exercitationem.
-				</p>
-			</div>
+const FooterItems = [
+	{
+		name: "github",
+		icon: AiFillGithub,
+		href: "https://github.com/DevMingle",
+	},
+	{
+		name: "githu",
+		icon: AiFillGithub,
+		href: "https://github.com/DevMingle",
+	},
+	{
+		name: "gith",
+		icon: AiFillGithub,
+		href: "https://github.com/DevMingle",
+	},
+	{
+		name: "git",
+		icon: AiFillGithub,
+		href: "https://github.com/DevMingle",
+	},
+];
 
-			<div className="flex flex-col">
-				<h1 className="mb-2 text-[#efe0fe] font-bold">Links</h1>
-				<a className="opacity-50" href="#">
-					Instagram
-				</a>
-				<a
-					className="opacity-50"
-					target="_blank"
-					href="https://github.com/WebDevSync"
+const FooterItem = ({ Icon, href }: { Icon: any; href: string }) => {
+	return (
+		<a
+			className="text-gray-400 hover:text-gray-200 hover:scale-[1.3]"
+			href={href}
+			target="_blank"
+		>
+			<Icon className="text-2xl" />
+		</a>
+	);
+};
+
+const Footer = () => {
+	return (
+		<footer className="text-gray-400 bg-gray-900 body-font relative bottom-0">
+			<div className="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col justify-around gap-10">
+				<Link
+					href="/"
+					className="flex title-font font-medium items-center justify-center text-white gap-3"
 				>
-					Github
-				</a>
-				<Link className="opacity-50" href="/about">
-					About
+					<Image src={Logo} alt="logo" width={45} height={25} />
+					<span className="text-xl">ByteChat</span>
 				</Link>
-				<Link className="opacity-50" href="/contact">
-					Contact
-				</Link>
+				<p className="text-sm text-gray-400 sm:border-l-2 sm:border-gray-800">
+					© 2023 ByteChat —
+					<a
+						href="https://github.com/DevMingle"
+						className="text-gray-500 ml-1"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						@DevMingle team
+					</a>
+				</p>
+				<span className="flex justify-center items-center gap-3 sm:ml-auto">
+					{FooterItems.map((item) => {
+						return (
+							<FooterItem key={item.name} Icon={item.icon} href={item.href} />
+						);
+					})}
+				</span>
 			</div>
-
-			<div>
-				<h1 className="mb-2 text-[#efe0fe] font-bold">Contact Us</h1>
-				<div className="relative flex items-center">
-					<input
-						className="rounded-xl focus:border-none focus:outline-none bg-[#373737] p-2"
-						type="text"
-					/>
-					<button className="absolute right-0 bg-[#784cfb] p-1 w-10 rounded-full">
-						&gt;
-					</button>
-				</div>
-			</div>
-		</div>
-		<div className="md:mt-10 mx-auto max-w-4xl mt-5 flex flex-col md:flex-row items-center justify-between pb-4">
-			<div>
-				<h3>
-					Made by{" "}
-					<span className="text-[#6440b9] font-semibold">
-						<a href="https://github.com/WebDevSync" target="_blank">
-							DevSync engineers
-						</a>
-					</span>
-				</h3>
-			</div>
-
-			<div className="flex items-center space-x-3">
-				<h2>Follow Us ---- Insta Logo</h2>
-				<button className="p-3 bg-[#784cfb] rounded-[50%] rotate-90">
-					&lt;
-				</button>
-			</div>
-		</div>
-	</div>
-);
+		</footer>
+	);
+};
 
 export default Footer;

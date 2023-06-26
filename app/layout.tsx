@@ -2,6 +2,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { Metadata } from "next";
 import Navbar from "@component/Navbar";
+import Footer from "@component/Footer";
 
 // import { Provider } from "react-redux";
 // import store from "@src/store/store.ts";
@@ -32,6 +33,7 @@ export default function RootLayout({
 				{/* <Provider store={store}> */}
 				<Navbar />
 				{children}
+				<Footer />
 				{/* </Provider> */}
 			</body>
 		</html>
