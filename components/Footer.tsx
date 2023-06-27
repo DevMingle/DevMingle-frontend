@@ -31,7 +31,7 @@ const FooterItems = [
 const FooterItem = ({ Icon, href }: { Icon: any; href: string }) => {
 	return (
 		<a
-			className="text-gray-400 hover:text-gray-200 hover:scale-[1.3]"
+			className="dark:text-gray-400 dark:hover:text-gray-200 hover:scale-[1.3] duration-300"
 			href={href}
 			target="_blank"
 		>
@@ -42,20 +42,20 @@ const FooterItem = ({ Icon, href }: { Icon: any; href: string }) => {
 
 const Footer = () => {
 	return (
-		<footer className="text-gray-400 bg-gray-900 body-font relative bottom-0">
+		<footer className="dark:text-gray-400 dark:bg-gray-900 body-font relative bottom-0">
 			<div className="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col justify-around gap-10">
 				<Link
 					href="/"
-					className="flex title-font font-medium items-center justify-center text-white gap-3"
+					className="flex title-font font-medium items-center justify-center dark:text-white gap-3"
 				>
 					<Image src={Logo} alt="logo" width={45} height={25} />
 					<span className="text-xl">ByteChat</span>
 				</Link>
-				<p className="text-sm text-gray-400 sm:border-l-2 sm:border-gray-800">
+				<p className="text-sm dark:text-gray-400 sm:border-l-2 dark:sm:border-gray-800">
 					© 2023 ByteChat —
 					<a
 						href="https://github.com/DevMingle"
-						className="text-gray-500 ml-1"
+						className="dark:text-gray-500 ml-1"
 						target="_blank"
 						rel="noopener noreferrer"
 					>
