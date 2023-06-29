@@ -5,6 +5,7 @@ import { FcGoogle } from "react-icons/fc";
 import Image from "next/image";
 import Link from "next/link";
 import { github, google } from "@/src/utils/oAuth";
+import { encodeToken } from "@/src/utils/jwt";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -19,8 +20,28 @@ const SignUp = () => {
   }: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [target.name]: target.value });
   };
-  const handleRegister = (e: React.MouseEventHandler<HTMLButtonElement>) => {
-    console.log(formData);
+  const handleRegister = async (
+    e: React.MouseEventHandler<HTMLButtonElement>
+  ) => {
+    const { name, email, password, confirmPassword } = formData;
+    if (password !== confirmPassword) return alert("Passwords dont match");
+    if (password.length < 8) return alert("Please enter a strong password");
+    if (name.length < 3) return alert("Please enter a valid name");
+    if (
+      !email
+        .toLowerCase()
+        .match(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        )
+    )
+      return alert("Please enter a valid email");
+    try {
+      const res = await fetch("http://192.168.1.7:8000/api/auth/register");
+      const data = await res.json();
+      if (!data.success) return alert(data.message);
+      const clientToken = encodeToken(data.token);
+      localStorage.setItem("jwt", clientToken);
+    } catch (err) {}
   };
   return (
     <main className="p-16 bg-[#e0daf1] text-[#040307] min-h-screen">
