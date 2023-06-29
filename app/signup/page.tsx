@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import Image from "next/image";
@@ -36,10 +36,17 @@ const SignUp = () => {
     )
       return alert("Please enter a valid email");
     try {
-      const res = await fetch("http://192.168.1.7:8000/api/auth/register");
+      const res = await fetch("http://192.168.1.7:8000/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
       const data = await res.json();
       if (!data.success) return alert(data.message);
-      const clientToken = encodeToken(data.token);
+      const clientToken = await encodeToken(data.token)
+      console.log(data.token, clientToken)
       localStorage.setItem("jwt", clientToken);
     } catch (err) {}
   };
