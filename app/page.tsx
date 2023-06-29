@@ -17,7 +17,7 @@ const page = () => {
 		  console.log(data);
 		};
 		getUser();
-	  });
+	});
 	return <div className="h-screen">page</div>;
 };
 
