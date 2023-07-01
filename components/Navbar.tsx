@@ -24,8 +24,8 @@ const NavItems: { name: string; href: string; delay: number }[] = [
 		delay: 0.3,
 	},
 	{
-		name: "Explore",
-		href: "/signup",
+		name: "Blog",
+		href: "/blog",
 		delay: 0.4,
 	},
 ];
@@ -69,7 +69,7 @@ const Navbar = () => {
 					>
 						<Image src={Logo} width={60} height={30} alt="Loading..." />
 					</motion.div>
-					<span className="text-2xl font-bold nav-title">ByteChat</span>
+					<span className="text-2xl font-bold">ByteChat</span>
 				</Link>
 				<nav className="hidden md:flex md:ml-auto flex-wrap items-center text-lg justify-center gap-5 font-medium">
 					{NavItems.map((navitem) => {

@@ -9,7 +9,7 @@ module.exports = {
 		extend: {
 			colors: {
 				"text-dark": "#f7faf4",
-				"bg-dark": "#221632",
+				"bg-dark": "#292a3f",
 				"primary-btn": "#6f449c",
 				"secondary-btn": "#261a37",
 				"accent-dark": "#6f449c",
@@ -17,7 +17,7 @@ module.exports = {
 			},
 		},
 	},
-	plugins: [require("daisyui")],
+	plugins: [require("daisyui"), require("@tailwindcss/forms")],
 	darkMode: "class",
 	daisyui: {
 		themes: [],

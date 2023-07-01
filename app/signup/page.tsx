@@ -1,14 +1,108 @@
-"use client"
+"use client";
 import React from "react";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import Image from "next/image";
 import { github, google } from "@/src/utils/oAuth";
+import { Logo } from "@/public";
+import Link from "next/link";
 
 const SignUp = () => {
 	return (
-		<main className="p-16 bg-[#e0daf1] text-[#040307] min-h-screen">
-			<div className="flex md:shadow-lg md:border-4 md:p-10 space-x-8">
+		<div className="flex min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+			<div className="sm:mx-auto sm:w-full sm:max-w-sm">
+				<Image
+					className="mx-auto"
+					src={Logo}
+					alt="Your Company"
+					height={60}
+					width={60}
+				/>
+				<h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight">
+					Sign Up to start your journey!
+				</h2>
+			</div>
+
+			<div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+				<form className="space-y-6" action="#" method="POST">
+					<div>
+						<div className="mt-2 inputBox">
+							<input type="email" required={true} />
+							<span>Email address</span>
+						</div>
+					</div>
+
+					<div>
+						<div className="flex items-center justify-end">
+							<div className="text-sm">
+								<a href="#" className="font-semibold text-purple-500">
+									Forgot password?
+								</a>
+							</div>
+						</div>
+						<div className="mt-2 inputBox">
+							<input type="password" required={true} />
+							<span>Password</span>
+						</div>
+					</div>
+
+					<div>
+						<button
+							type="submit"
+							className="flex w-full justify-center rounded-md bg-primary-btn px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-opacity-80"
+						>
+							Sign Up
+						</button>
+					</div>
+					<div className="text-center text-sm text-gray-500">
+						<p className="inline">Already have an account? </p>
+						<Link href="/signin" className="text-purple-500 inline">
+							Sign in
+						</Link>
+					</div>
+				</form>
+
+				<div className="mt-10 text-center text-sm text-gray-500">
+					<div className="flex items-center justify-center gap-5">
+						<div className="w-20 h-[1.5px] bg-slate-500"></div>
+						Or
+						<div className="w-20 h-[1.5px] bg-slate-500"></div>
+					</div>
+					<div className="flex flex-row items-center justify-center gap-5 mt-5">
+						<button className="border text-2xl lg:hidden flex items-center px-3 py-2 border-gray-500 rounded-lg">
+							<AiFillGithub />
+						</button>
+
+						<button className="border text-2xl lg:hidden flex items-center px-3 py-2 border-gray-500 rounded-lg">
+							<FcGoogle />
+						</button>
+
+						<button
+							onClick={github}
+							className="border hidden hover:scale-110 transition lg:flex items-center px-3 py-2 border-gray-500 rounded-lg"
+						>
+							<AiFillGithub className="mr-1" />
+							Sign Up With Github
+						</button>
+
+						<button
+							onClick={google}
+							className="border hidden hover:scale-110 transition lg:flex items-center px-3 py-2 border-gray-500 rounded-lg"
+						>
+							<FcGoogle className="mr-1" />
+							Sign Up With Google
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+};
+
+const signup = () => {
+	return (
+		<main className="p-16 min-h-screen">
+			<div className="flex md:shadow-lg md:p-10 space-x-8">
 				<div className="mx-auto container flex items-stretch flex-col">
 					<div className="mb-10">
 						<h1 className="font-bold text-4xl mb-5">Get Started Now</h1>
@@ -26,12 +120,18 @@ const SignUp = () => {
 							<FcGoogle />
 						</button>
 
-						<button onClick={github} className="border hidden hover:scale-110 transition lg:flex items-center px-3 py-2 border-gray-500 rounded-lg">
+						<button
+							onClick={github}
+							className="border hidden hover:scale-110 transition lg:flex items-center px-3 py-2 border-gray-500 rounded-lg"
+						>
 							<AiFillGithub className="mr-1" />
 							Sign Up With Github
 						</button>
 
-						<button onClick={google} className="border hidden hover:scale-110 transition lg:flex items-center px-3 py-2 border-gray-500 rounded-lg">
+						<button
+							onClick={google}
+							className="border hidden hover:scale-110 transition lg:flex items-center px-3 py-2 border-gray-500 rounded-lg"
+						>
 							<FcGoogle className="mr-1" />
 							Sign Up With Google
 						</button>
