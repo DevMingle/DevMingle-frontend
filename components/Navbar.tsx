@@ -67,7 +67,7 @@ const Navbar = () => {
 						animate={{ opacity: 1, scale: 1 }}
 						transition={{ duration: 0.5 }}
 					>
-						<Image src={Logo} width={60} height={30} alt="Loading..." />
+						<Image src={Logo} width={70} height={30} alt="Loading..." />
 					</motion.div>
 					<span className="text-2xl font-bold">ByteChat</span>
 				</Link>
