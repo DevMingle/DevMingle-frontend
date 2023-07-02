@@ -7,7 +7,7 @@ This is the frontend codebase of the bytechat site made using nextjs. Backend is
 
 ---
 Made by:
-- [<b>NaviTHecoderboi</b>](https://github.com/NaviTheCoderboi)
+- [<b>NaviThecoderboi</b>](https://github.com/NaviTheCoderboi)
 - [<b>KartikeyKakaria</b>](https://github.com/KartikeyKakaria)
 - [<b>Hero-codes</b>](https://github.com/Hero-codes)
 </p>
