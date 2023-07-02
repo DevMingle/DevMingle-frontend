@@ -3,118 +3,163 @@ import React, { useState } from "react";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import Image from "next/image";
-import { google, github } from "@/src/utils/oAuth";
+import Link from "next/link";
+import { github, google } from "@/src/utils/oAuth";
+import { Logo } from "@/public";
 import { encodeToken } from "@/src/utils/jwt";
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
+
+const isEmailValid = (email: string) => {
+	const emailRegex =
+		/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	if (email.toLowerCase().match(emailRegex)) {
+		return true;
+	} else {
+		return false;
+	}
+};
+
+const isPasswordValid = (password: string) => {
+	return password.length >= 8;
+};
+
 const SignIn = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const login = async () => {
-    if (!email || !password) return alert("Please enter both the fields");
-    
-      const res = await fetch("http://192.168.1.7:8000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await res.json();
-	  if(data.status === 402) return alert(data.message)
-      if (data.success) {
-        const clientToken = encodeToken(data.token);
-        localStorage.setItem("jwt", clientToken);
-        console.log(data);
-      }
-    
-  };
-  return (
-    <main className="p-16 bg-[#e0daf1] text-[#040307] min-h-screen">
-      <div className="flex md:shadow-lg md:border-4 md:p-10 space-x-8">
-        <div className="mx-auto container flex items-stretch flex-col">
-          <div className="mb-10">
-            <h1 className="font-bold text-4xl mb-5">Welcome Back!</h1>
-            <p>
-              Welcome in our service, create account to start your experience
-            </p>
-          </div>
+	const [Email, setEmail] = useState("");
+	const [Password, setPassword] = useState("");
 
-          <div className="flex items-center space-x-5 mb-9">
-            <button className="border text-2xl lg:hidden flex items-center px-3 py-2 border-gray-500 rounded-lg">
-              <AiFillGithub />
-            </button>
+	const isReadyToSignIn = () => {
+		if (isEmailValid(Email) && isPasswordValid(Password)) {
+			return false;
+		} else {
+			return true;
+		}
+	};
 
-            <button className="border text-2xl lg:hidden flex items-center px-3 py-2 border-gray-500 rounded-lg">
-              <FcGoogle />
-            </button>
+	const login = async () => {
+		if (!Email || !Password) return alert("Please enter both the fields");
 
-            <button
-              onClick={github}
-              className="border hidden hover:scale-110 transition lg:flex items-center px-3 py-2 border-gray-500 rounded-lg"
-            >
-              <AiFillGithub className="mr-1" />
-              Sign In With Github
-            </button>
-
-            <button
-              onClick={google}
-              className="border hidden hover:scale-110 transition lg:flex items-center px-3 py-2 border-gray-500 rounded-lg"
-            >
-              <FcGoogle className="mr-1" />
-              Sign In With Google
-            </button>
-          </div>
-
-          <div className="flex flex-col max-w-md mb-5">
-            <label className="py-3">Email</label>
-            <input
-              onChange={(e) => setEmail(e.target.value)}
-              className="px-2 py-3 rounded-md focus:outline-[#c766ae]"
-              placeholder="Example@gmail.com"
-              type="email"
-            />
-
-            <label className="py-3">Password</label>
-            <input
-              onChange={(e) => setPassword(e.target.value)}
-              className="px-2 py-3 rounded-md focus:outline-[#c766ae]"
-              placeholder="Password..."
-              type="password"
-            />
-          </div>
-
-          <div className="max-w-md">
-            {/* <input className="accent-[#c766ae]" type="checkbox" />{" "}
-						<span>
-							I{`'`}m ready to agree to the{" "}
-							<span className="font-semibold">privacy policy</span>
-						</span>{" "}
-						<br /> */}
-            <button
-              onClick={() => login()}
-              className="bg-[#ae66c7] hover:bg-[#8a0cb4] transition w-full text-center py-3 rounded-xl my-2"
-            >
-              Sign In
-            </button>
-            <p>
-              Don{`'`}t have an account?{" "}
-              <span className="ml-1 cursor-pointer underline">Sign Up</span>
-            </p>
-          </div>
-        </div>
-
-        <div className="md:flex hidden items-center justify-center">
-          <Image
-            alt="..."
-            src={
-              "https://images.pexels.com/photos/4473400/pexels-photo-4473400.jpeg?auto=compress&cs=tinysrgb&w=600"
-            }
-            width={"900"}
-            height={"500"}
-          />
-        </div>
-      </div>
-    </main>
-  );
+		const res = await fetch("http://localhost:8000/api/auth/login", {
+			method: "POST",
+			headers: {
+				"Content-type": "application/json",
+			},
+			body: JSON.stringify({ Email, Password }),
+		});
+		const data = await res.json();
+		if (data.status === 402) return alert(data.message);
+		if (data.success) {
+			const clientToken = encodeToken(data.token);
+			localStorage.setItem("jwt", clientToken);
+			console.log(data);
+		}
+	};
+	return (
+		<div className="min-h-screen flex flex-col justify-center items-center p-10">
+			<ToastContainer
+				position="top-center"
+				autoClose={2000}
+				hideProgressBar={false}
+				newestOnTop={false}
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+				theme="dark"
+			/>
+			<div className="flex flex-col justify-center gap-10">
+				<div className="flex items-center justify-center flex-col gap-5">
+					<Image src={Logo} alt="loading..." width={70} height={30} />
+					<div className="text-4xl font-semibold">Sign In</div>
+					<div className="flex gap-2 hover:brightness-150 duration-300 text-accent-dark ">
+						{`Don't`} have an account? <Link href="/signup">Sign up</Link>
+					</div>
+				</div>
+				<div className="flex flex-col gap-4">
+					<div className="relative w-full formInput">
+						<input
+							type="text"
+							required={true}
+							onChange={(e: any) => setEmail(e.target.value)}
+							name="email"
+							className={`border-2 duration-300 ${
+								isEmailValid(Email) ? "border-green-500" : "border-red-500"
+							}`}
+						/>
+						<span
+							className={`border-2 ${
+								isEmailValid(Email) ? "text-green-500" : "text-red-500"
+							}`}
+						>
+							Email address
+						</span>
+					</div>
+					<div className="relative w-full formInput">
+						<input
+							type="password"
+							required={true}
+							onChange={(e: any) => setPassword(e.target.value)}
+							name="password"
+							className={`border-2 duration-300 ${
+								isPasswordValid(Password)
+									? "border-green-500"
+									: "border-red-500"
+							}`}
+						/>
+						<span
+							className={`border-2 ${
+								isPasswordValid(Password) ? "text-green-500" : "text-red-500"
+							}`}
+						>
+							Password
+						</span>
+					</div>
+					<div className="flex justify-end">
+						<Link
+							href="/signin"
+							className="text-accent-dark hover:brightness-150 duration-300"
+						>
+							Forgot password?
+						</Link>
+					</div>
+					<button
+						className={`w-full h-12 bg-primary-btn text-xl flex items-center justify-center rounded-lg duration-300  ${
+							isReadyToSignIn() === false
+								? "hover:brightness-95"
+								: "brightness-75"
+						}`}
+						onClick={() => login()}
+						disabled={isReadyToSignIn()}
+					>
+						Sign In
+					</button>
+					<div className="flex justify-center items-center text-accent-dark gap-2"></div>
+				</div>
+				<div className="flex gap-3 justify-center items-center">
+					<div className="w-32 h-1 bg-slate-600" />
+					Or
+					<div className="w-32 h-1 bg-slate-600" />
+				</div>
+				<div className="flex justify-center items-center gap-12 md:gap-20">
+					<div
+						className="flex items-center justify-center gap-4 border-slate-600 hover:bg-slate-600 cursor-pointer rounded-lg border-2 p-3 duration-300"
+						onClick={google}
+					>
+						<FcGoogle className="text-3xl" />
+						Google
+					</div>
+					<div
+						className="flex items-center justify-center gap-4 border-slate-600 hover:bg-slate-600 cursor-pointer rounded-lg border-2 p-3 duration-300"
+						onClick={github}
+					>
+						<AiFillGithub className="text-3xl" />
+						Github
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 };
 
 export default SignIn;

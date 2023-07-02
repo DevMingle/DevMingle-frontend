@@ -42,32 +42,32 @@ const chatMessages: { message: string; delay: number; user: "me" | "other" }[] =
 	];
 
 export default function Page() {
-	useEffect(() => {
-		const getUser = async () => {
-			const clientToken = localStorage.getItem("jwt");
-			let token;
-			if (clientToken) {
-				token = decodeToken(clientToken);
-			}
-			const res = await fetch("http://192.168.1.7:8000/api/auth/check", {
-				method: "GET",
-				credentials: "include",
-				headers: {
-					Accept: "application/json",
-					Authorization: `Bearer ${token && token}`,
-					"Content-type": "application/json",
-					"Access-Control-Allow-Credentials": "true",
-				},
-			});
-			const data = await res.json();
-			console.log(data);
-		};
-		getUser();
-	});
+	// useEffect(() => {
+	// 	const getUser = async () => {
+	// 		const clientToken = localStorage.getItem("jwt");
+	// 		let token;
+	// 		if (clientToken) {
+	// 			token = decodeToken(clientToken);
+	// 		}
+	// 		const res = await fetch("http://localhost:8000/api/auth/check", {
+	// 			method: "GET",
+	// 			credentials: "include",
+	// 			headers: {
+	// 				Accept: "application/json",
+	// 				Authorization: `Bearer ${token && token}`,
+	// 				"Content-type": "application/json",
+	// 				"Access-Control-Allow-Credentials": "true",
+	// 			},
+	// 		});
+	// 		const data = await res.json();
+	// 		console.log(data);
+	// 	};
+	// 	getUser();
+	// });
 	return (
 		<div className="flex flex-col items-center px-10 py-20 min-h-screen w-full">
-			<div className="flex items-center w-full gap-10">
-				<div className="border-[1.5px] border-slate-600 w-1/2 rounded-lg">
+			<div className="flex flex-col items-center justify-center w-full gap-10">
+				<div className="border-[1.5px] border-slate-600 w-2/3 rounded-lg">
 					<div className="flex justify-start items-center gap-3 px-8 py-5">
 						<BsFillCircleFill className="text-red-500 text-lg" />
 						<BsFillCircleFill className="text-yellow-500 text-lg" />

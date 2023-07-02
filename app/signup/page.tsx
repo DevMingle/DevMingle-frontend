@@ -1,15 +1,37 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import Image from "next/image";
 import Link from "next/link";
 import { github, google } from "@/src/utils/oAuth";
 import { Logo } from "@/public";
-import { ToastContainer, toast } from "react-toastify";
 import { encodeToken } from "@/src/utils/jwt";
 import "react-toastify/dist/ReactToastify.css";
-import { BsGooglePlay } from "react-icons/bs";
+import { toast, ToastContainer } from "react-toastify";
+
+const isNameValid = (name: string) => {
+	return name.length >= 3;
+};
+
+const isEmailValid = (email: string) => {
+	const emailRegex =
+		/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	if (email.toLowerCase().match(emailRegex)) {
+		return true;
+	} else {
+		return false;
+	}
+};
+
+const isPasswordValid = (password: string) => {
+	return password.length >= 8;
+};
+
+const isConfirmPasswordValid = (password: string, confirmPassword: string) => {
+	if (password.length < 1) return false;
+	else return password === confirmPassword;
+};
 
 const SignUp = () => {
 	const [formData, setFormData] = useState({
@@ -18,7 +40,6 @@ const SignUp = () => {
 		password: "",
 		confirmPassword: "",
 	});
-
 	const [acceptedPolicy, setAcceptedPolicy] = useState(false);
 
 	const handleInputChange = ({
@@ -26,12 +47,29 @@ const SignUp = () => {
 	}: React.ChangeEvent<HTMLInputElement>) => {
 		setFormData({ ...formData, [target.name]: target.value });
 	};
-
+	console.log(!acceptedPolicy);
 	const handleRegister = async (e: React.MouseEvent<HTMLElement>) => {
 		const { name, email, password, confirmPassword } = formData;
-		if (password !== confirmPassword) {
-			setFormData({ name: "", email: "", password: "", confirmPassword: "" });
-			return toast.error("Confirm password doesn't match with the password!", {
+		if (name.length < 3) {
+			return toast.error("Please choose a valid name!", {
+				position: "top-center",
+				autoClose: 2000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "dark",
+			});
+		}
+		if (
+			!email
+				.toLowerCase()
+				.match(
+					/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+				)
+		) {
+			return toast.error("Please choose a valid email!", {
 				position: "top-center",
 				autoClose: 2000,
 				hideProgressBar: false,
@@ -54,8 +92,9 @@ const SignUp = () => {
 				theme: "dark",
 			});
 		}
-		if (name.length < 3) {
-			return toast.error("Please choose a valid name!", {
+		if (password !== confirmPassword) {
+			setFormData({ name: "", email: "", password: "", confirmPassword: "" });
+			return toast.error("Confirm password doesn't match with the password!", {
 				position: "top-center",
 				autoClose: 2000,
 				hideProgressBar: false,
@@ -68,24 +107,6 @@ const SignUp = () => {
 		}
 		if (!acceptedPolicy) {
 			return toast.error("Please accept our policy to continue!", {
-				position: "top-center",
-				autoClose: 2000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: "dark",
-			});
-		}
-		if (
-			!email
-				.toLowerCase()
-				.match(
-					/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-				)
-		) {
-			return toast.error("Please choose a valid email!", {
 				position: "top-center",
 				autoClose: 2000,
 				hideProgressBar: false,
@@ -122,6 +143,19 @@ const SignUp = () => {
 		} catch (err) {}
 		e.preventDefault();
 	};
+	const isReadyToRegister = () => {
+		if (
+			acceptedPolicy &&
+			isNameValid(formData.name) &&
+			isEmailValid(formData.email) &&
+			isPasswordValid(formData.password) &&
+			isConfirmPasswordValid(formData.password, formData.confirmPassword)
+		) {
+			return false;
+		} else {
+			return true;
+		}
+	};
 	return (
 		<div className="min-h-screen flex flex-col justify-center items-center p-10">
 			<ToastContainer
@@ -145,14 +179,25 @@ const SignUp = () => {
 					</div>
 				</div>
 				<div className="flex flex-col gap-4">
-					<div className="relative w-full formInput">
+					<div className="relative w-full formInput group">
 						<input
 							type="text"
 							required={true}
 							onChange={handleInputChange}
 							name="name"
+							className={`border-2 duration-300 ${
+								isNameValid(formData.name)
+									? "border-green-500"
+									: "border-red-500"
+							}`}
 						/>
-						<span>Name</span>
+						<span
+							className={`border-2 ${
+								isNameValid(formData.name) ? "text-green-500" : "text-red-500"
+							}`}
+						>
+							Name
+						</span>
 					</div>
 					<div className="relative w-full formInput">
 						<input
@@ -160,8 +205,19 @@ const SignUp = () => {
 							required={true}
 							onChange={handleInputChange}
 							name="email"
+							className={`border-2 duration-300 ${
+								isEmailValid(formData.email)
+									? "border-green-500"
+									: "border-red-500"
+							}`}
 						/>
-						<span>Email address</span>
+						<span
+							className={`border-2 ${
+								isEmailValid(formData.email) ? "text-green-500" : "text-red-500"
+							}`}
+						>
+							Email address
+						</span>
 					</div>
 					<div className="relative w-full formInput">
 						<input
@@ -169,8 +225,21 @@ const SignUp = () => {
 							required={true}
 							onChange={handleInputChange}
 							name="password"
+							className={`border-2 duration-300 ${
+								isPasswordValid(formData.password)
+									? "border-green-500"
+									: "border-red-500"
+							}`}
 						/>
-						<span>Password</span>
+						<span
+							className={`border-2 ${
+								isPasswordValid(formData.password)
+									? "text-green-500"
+									: "text-red-500"
+							}`}
+						>
+							Password
+						</span>
 					</div>
 					<div className="relative w-full formInput">
 						<input
@@ -178,11 +247,34 @@ const SignUp = () => {
 							required={true}
 							onChange={handleInputChange}
 							name="confirmPassword"
+							className={`border-2 duration-300 ${
+								isConfirmPasswordValid(
+									formData.password,
+									formData.confirmPassword
+								)
+									? "border-green-500"
+									: "border-red-500"
+							}`}
 						/>
-						<span>Confirm Password</span>
+						<span
+							className={`border-2 ${
+								isConfirmPasswordValid(
+									formData.password,
+									formData.confirmPassword
+								)
+									? "text-green-500"
+									: "text-red-500"
+							}`}
+						>
+							Confirm Password
+						</span>
 					</div>
-					<div className="flex justify-around text-accent-dark">
-						<div className="flex gap-2 justify-center items-center">
+					<div className="flex justify-start">
+						<div
+							className={`flex gap-2 justify-center items-center text-accent-dark
+							${acceptedPolicy ? "brightness-150" : ""}
+						`}
+						>
 							<input
 								type="checkbox"
 								className="h-5 w-5"
@@ -192,14 +284,15 @@ const SignUp = () => {
 							/>
 							Accept our policy
 						</div>
-						<Link href="/signup">Forgot password?</Link>
 					</div>
 					<button
 						className={`w-full h-12 bg-primary-btn text-xl flex items-center justify-center rounded-lg duration-300  ${
-							acceptedPolicy ? "hover:bg-opacity-60" : "bg-opacity-80"
+							isReadyToRegister() === false
+								? "hover:brightness-95"
+								: "brightness-75"
 						}`}
 						onClick={handleRegister}
-						disabled={!acceptedPolicy}
+						disabled={isReadyToRegister()}
 					>
 						Sign Up
 					</button>
@@ -210,7 +303,7 @@ const SignUp = () => {
 					Or
 					<div className="w-32 h-1 bg-slate-600" />
 				</div>
-				<div className="flex justify-center items-center gap-20">
+				<div className="flex justify-center items-center gap-12 md:gap-20">
 					<div
 						className="flex items-center justify-center gap-4 border-slate-600 hover:bg-slate-600 cursor-pointer rounded-lg border-2 p-3 duration-300"
 						onClick={google}
