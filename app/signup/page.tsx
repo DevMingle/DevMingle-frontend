@@ -118,7 +118,7 @@ const SignUp = () => {
 			});
 		}
 		try {
-			const res = await fetch("http://localhost:8000/api/auth/register", {
+			const res = await fetch("/api/register", {
 				method: "POST",
 				headers: {
 					"Content-type": "application/json",
@@ -126,20 +126,21 @@ const SignUp = () => {
 				body: JSON.stringify(formData),
 			});
 			const data = await res.json();
-			if (!data.success)
-				return toast.error(data.message, {
-					position: "top-center",
-					autoClose: 2000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: "dark",
-				});
-			const clientToken = await encodeToken(data.token);
-			console.log(data.token, clientToken);
-			localStorage.setItem("jwt", clientToken);
+			console.log(data)
+			// if (!data.success)
+			// 	return toast.error(data.message, {
+			// 		position: "top-center",
+			// 		autoClose: 2000,
+			// 		hideProgressBar: false,
+			// 		closeOnClick: true,
+			// 		pauseOnHover: true,
+			// 		draggable: true,
+			// 		progress: undefined,
+			// 		theme: "dark",
+			// 	});
+			// const clientToken = await encodeToken(data.token);
+			// console.log(data.token, clientToken);
+			// localStorage.setItem("jwt", clientToken);
 		} catch (err) {}
 		e.preventDefault();
 	};

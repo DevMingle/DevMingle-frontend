@@ -39,6 +39,7 @@ const NavItem = ({
 	href: string;
 	delay: number;
 }) => {
+	
 	return (
 		<Link href={href} className="group transition duration-300">
 			<motion.div
