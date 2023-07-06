@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Logo } from "@/public";
 import Link from "next/link";
@@ -39,7 +39,16 @@ const NavItem = ({
 	href: string;
 	delay: number;
 }) => {
-	
+	useEffect(()=>{
+		const getUser = async()=>{
+			const res = await fetch("/api/check", {
+				method: "GET",
+			  });
+			  const data = await res.json();
+			  console.log(data);
+		}
+		getUser();
+	},[])
 	return (
 		<Link href={href} className="group transition duration-300">
 			<motion.div
