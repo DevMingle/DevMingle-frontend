@@ -3,21 +3,31 @@ import { userType } from "../utils/types";
 
 interface InitialState {
   user: null | userType;
-  loading: "idle" | "loading" | "loaded" | "error";
+  status: "idle" | "loading" | "loaded" | "error";
   error: null | string;
 }
-const initialState:InitialState = {
+const initialState: InitialState = {
   user: null,
-  loading: "idle",
+  status: "idle",
   error: null,
 };
 const usersSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUser: (state, action:PayloadAction<userType>) => {
+    setUser: (state, action: PayloadAction<userType>) => {
       state.user = action.payload;
-      state.loading = "loaded",
-    }
+      state.status = "loaded";
+    },
+    startStatus: (state) => {
+      state.status = "loading";
+    },
+    setError: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
+      state.status = "error";
+    },
   },
 });
+
+export const { setUser, startStatus, setError } = usersSlice.actions;
+export default usersSlice.reducer;
