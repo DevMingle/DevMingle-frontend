@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { userType } from "../utils/types";
+import { userType } from "../../utils/types";
 
 interface InitialState {
   user: null | userType;
@@ -19,7 +19,7 @@ const usersSlice = createSlice({
       state.user = action.payload;
       state.status = "loaded";
     },
-    startStatus: (state) => {
+    startLoading: (state) => {
       state.status = "loading";
     },
     setError: (state, action: PayloadAction<string>) => {
@@ -29,5 +29,5 @@ const usersSlice = createSlice({
   },
 });
 
-export const { setUser, startStatus, setError } = usersSlice.actions;
+export const { setUser, startLoading, setError } = usersSlice.actions;
 export default usersSlice.reducer;

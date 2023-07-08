@@ -1,14 +1,20 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import Image from "next/image";
 import Link from "next/link";
 import { github, google } from "@/src/utils/oAuth";
 import { Logo } from "@/public";
-import { encodeToken } from "@/src/utils/jwt";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
+import { useAppDispatch, useAppSelector } from "../../src/store/hooks";
+import { userType } from "../../src/utils/types";
+import {
+  setUser,
+  startLoading,
+  setError,
+} from "../../src/store/features/userSlice";
 
 const isNameValid = (name: string) => {
   return name.length >= 3;
@@ -34,8 +40,8 @@ const isConfirmPasswordValid = (password: string, confirmPassword: string) => {
 };
 
 const SignUp = () => {
-	
-
+  const dispatch = useAppDispatch();
+  const status = useAppSelector((state) => state.userReducer.status);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -119,6 +125,7 @@ const SignUp = () => {
       });
     }
     try {
+      dispatch(startLoading());
       const res = await fetch("/api/register", {
         method: "POST",
         headers: {
@@ -128,22 +135,21 @@ const SignUp = () => {
       });
       const data = await res.json();
       console.log(data);
-      // if (!data.success)
-      // 	return toast.error(data.message, {
-      // 		position: "top-center",
-      // 		autoClose: 2000,
-      // 		hideProgressBar: false,
-      // 		closeOnClick: true,
-      // 		pauseOnHover: true,
-      // 		draggable: true,
-      // 		progress: undefined,
-      // 		theme: "dark",
-      // 	});
-      // const clientToken = await encodeToken(data.token);
-      // console.log(data.token, clientToken);
-      // localStorage.setItem("jwt", clientToken);
-    } catch (err) {}
-    e.preventDefault();
+      if (!data.success)
+        return toast.error(data.message, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      dispatch(setUser(data.user as userType));
+    } catch (err) {
+      dispatch(setError(String(err)));
+    }
   };
   const isReadyToRegister = () => {
     if (
@@ -296,7 +302,7 @@ const SignUp = () => {
             onClick={handleRegister}
             disabled={isReadyToRegister()}
           >
-            Sign Up
+            {status === "loading" ? "Signin..." : "Sign Up"}
           </button>
           <div className="flex justify-center items-center text-accent-dark gap-2"></div>
         </div>

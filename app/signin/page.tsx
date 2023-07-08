@@ -9,6 +9,13 @@ import { Logo } from "@/public";
 import { encodeToken } from "@/src/utils/jwt";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
+import { useAppDispatch, useAppSelector } from "@/src/store/hooks";
+import {
+  setUser,
+  startLoading,
+  setError,
+} from "@/src/store/features/userSlice";
+import { userType } from "@/src/utils/types";
 
 const isEmailValid = (email: string) => {
   const emailRegex =
@@ -25,6 +32,8 @@ const isPasswordValid = (password: string) => {
 };
 
 const SignIn = () => {
+  const dispatch = useAppDispatch();
+  const status = useAppSelector((state) => state.userReducer.status);
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
 
@@ -39,19 +48,25 @@ const SignIn = () => {
   const login = async () => {
     if (!Email || !Password) return alert("Please enter both the fields");
 
-    const res = await fetch("/api/login", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({ email: Email, password: Password }),
-    });
-    const data = await res.json();
-    if (data.status === 402) return alert(data.message);
-    if (data.success) {
-      const clientToken = encodeToken(data.token);
-      localStorage.setItem("jwt", clientToken);
-      console.log(data);
+    try {
+      dispatch(startLoading());
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({ email: Email, password: Password }),
+      });
+      const data = await res.json();
+      console.log(data)
+      if (data.status === 402) return alert(data.message);
+      if (data.success) {
+        dispatch(setUser(data.user as userType));
+      } else {
+        dispatch(setError(data.message as string));
+      }
+    } catch (err) {
+      dispatch(setError(String(err)));
     }
   };
   return (
@@ -132,7 +147,7 @@ const SignIn = () => {
             onClick={() => login()}
             disabled={isReadyToSignIn()}
           >
-            Sign In
+            {status === "loading" ? "Signing in..." : "Sign In"}
           </button>
           <div className="flex justify-center items-center text-accent-dark gap-2"></div>
         </div>

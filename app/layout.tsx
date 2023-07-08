@@ -3,9 +3,7 @@ import { Inter } from "next/font/google";
 import { Metadata } from "next";
 import Navbar from "@component/Navbar";
 import Footer from "@component/Footer";
-import { decodeToken } from "@/src/utils/jwt";
-import { Provider } from "react-redux";
-import store from "@src/store/store";
+import Providers from '../src/store/Provider'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,15 +25,17 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body
-        className={`${inter.className} dark:bg-bg-dark dark:text-text-dark`}
-      >
-        <Provider store={store}>
+      {/* <Provider store={store}> */}
+        <body
+          className={`${inter.className} dark:bg-bg-dark dark:text-text-dark`}
+        >
+          <Providers>
           <Navbar />
           {children}
           <Footer />
-        </Provider>
-      </body>
+          </Providers>
+        </body>
+      {/* </Provider> */}
     </html>
   );
 }
