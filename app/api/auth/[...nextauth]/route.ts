@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 import axios from "axios";
 const handler = NextAuth({
   providers: [
@@ -7,23 +8,27 @@ const handler = NextAuth({
       clientSecret: process.env.GITHUB_SECRET || "your github oauth secret",
       clientId: process.env.GITHUB_ID || "your github id",
     }),
+    GoogleProvider({
+      clientSecret: process.env.GOOGLE_SECRET || "your google secret",
+      clientId: process.env.GOOGLE_ID || "your google id",
+    }),
   ],
   callbacks: {
     async jwt({ token }) {
-      console.log(token, "token\n\n");
       try {
         const { data } = await axios.post(
           `${process.env.BACKEND_URL}/auth/oAuth`,
           {
-            ...token
+            ...token,
           }
         );
         if (data.success) {
+          console.log(data.user, "\n\n\n ");
           return { user: data.user, token: data.token };
         }
         return token;
       } catch (err) {
-        //   console.log(err)
+        console.log(err);
         return token;
       }
     },

@@ -2,9 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 export async function GET(req: NextRequest) {
   const oAuthToken = await getToken({ req });
-  console.log(oAuthToken, "oAuthToken \n\n")
   if (oAuthToken) {
-    console.log("umm yeah dude \n\n\n")
     return NextResponse.json(
       {
         success:true,
