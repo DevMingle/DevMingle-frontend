@@ -1,8 +1,4 @@
 {
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
-	"editor.tabSize": 4,
-	"scss.format.enable": true,
-	"[sass]": {
-		"editor.defaultFormatter": "syler.sass-indented"
-	}
+	"editor.tabSize": 4
 }

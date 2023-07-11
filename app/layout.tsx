@@ -3,8 +3,8 @@ import { Inter } from "next/font/google";
 import { Metadata } from "next";
 import Navbar from "@component/Navbar";
 import Footer from "@component/Footer";
-// import { Provider } from "react-redux";
-// import store from "@src/store/store.ts";
+import MainAnimation from "@component/MainAnimation";
+import { Providers } from "@src/redux/Provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,11 +29,12 @@ export default function RootLayout({
 			<body
 				className={`${inter.className} dark:bg-bg-dark dark:text-text-dark`}
 			>
-				{/* <Provider store={store}> */}
-				<Navbar />
-				{children}
-				<Footer />
-				{/* </Provider> */}
+				<Providers>
+					{/* <MainAnimation /> */}
+					<Navbar />
+					{children}
+					<Footer />
+				</Providers>
 			</body>
 		</html>
 	);

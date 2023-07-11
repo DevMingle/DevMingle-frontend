@@ -9,6 +9,12 @@ import { Logo } from "@/public";
 import { encodeToken } from "@/src/utils/jwt";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Signup | ByteChat",
+	description: "",
+};
 
 const isEmailValid = (email: string) => {
 	const emailRegex =
@@ -27,6 +33,7 @@ const isPasswordValid = (password: string) => {
 const SignIn = () => {
 	const [Email, setEmail] = useState("");
 	const [Password, setPassword] = useState("");
+	console.log(Email, Password);
 
 	const isReadyToSignIn = () => {
 		if (isEmailValid(Email) && isPasswordValid(Password)) {
@@ -47,7 +54,17 @@ const SignIn = () => {
 			body: JSON.stringify({ Email, Password }),
 		});
 		const data = await res.json();
-		if (data.status === 402) return alert(data.message);
+		if (data.status === 402)
+			return toast.error(data.message, {
+				position: "top-center",
+				autoClose: 3000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "dark",
+			});
 		if (data.success) {
 			const clientToken = encodeToken(data.token);
 			localStorage.setItem("jwt", clientToken);
@@ -127,7 +144,7 @@ const SignIn = () => {
 						className={`w-full h-12 bg-primary-btn text-xl flex items-center justify-center rounded-lg duration-300  ${
 							isReadyToSignIn() === false
 								? "hover:brightness-95"
-								: "brightness-75"
+								: "brightness-75 cursor-not-allowed"
 						}`}
 						onClick={() => login()}
 						disabled={isReadyToSignIn()}

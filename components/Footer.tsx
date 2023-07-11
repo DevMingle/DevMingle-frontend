@@ -54,12 +54,12 @@ const Footer = () => {
 				<p className="text-sm dark:text-gray-400 sm:border-l-2 dark:sm:border-gray-800">
 					© 2023 ByteChat —
 					<a
-						href="https://github.com/DevMingle"
+						href="https://github.com/Devaunch"
 						className="dark:text-gray-500 ml-1"
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						@DevMingle team
+						@Devaunch team
 					</a>
 				</p>
 				<span className="flex justify-center items-center gap-3 sm:ml-auto">

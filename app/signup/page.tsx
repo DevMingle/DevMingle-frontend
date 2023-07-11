@@ -49,74 +49,6 @@ const SignUp = () => {
 	};
 	console.log(!acceptedPolicy);
 	const handleRegister = async (e: React.MouseEvent<HTMLElement>) => {
-		const { name, email, password, confirmPassword } = formData;
-		if (name.length < 3) {
-			return toast.error("Please choose a valid name!", {
-				position: "top-center",
-				autoClose: 2000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: "dark",
-			});
-		}
-		if (
-			!email
-				.toLowerCase()
-				.match(
-					/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-				)
-		) {
-			return toast.error("Please choose a valid email!", {
-				position: "top-center",
-				autoClose: 2000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: "dark",
-			});
-		}
-		if (password.length < 8) {
-			return toast.error("Plase choose a strong password!", {
-				position: "top-center",
-				autoClose: 2000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: "dark",
-			});
-		}
-		if (password !== confirmPassword) {
-			setFormData({ name: "", email: "", password: "", confirmPassword: "" });
-			return toast.error("Confirm password doesn't match with the password!", {
-				position: "top-center",
-				autoClose: 2000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: "dark",
-			});
-		}
-		if (!acceptedPolicy) {
-			return toast.error("Please accept our policy to continue!", {
-				position: "top-center",
-				autoClose: 2000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: "dark",
-			});
-		}
 		try {
 			const res = await fetch("http://localhost:8000/api/auth/register", {
 				method: "POST",
@@ -141,6 +73,7 @@ const SignUp = () => {
 			console.log(data.token, clientToken);
 			localStorage.setItem("jwt", clientToken);
 		} catch (err) {}
+		setFormData({ name: "", email: "", password: "", confirmPassword: "" });
 		e.preventDefault();
 	};
 	const isReadyToRegister = () => {
@@ -185,7 +118,7 @@ const SignUp = () => {
 							required={true}
 							onChange={handleInputChange}
 							name="name"
-							className={`border-2 duration-300 ${
+							className={`border-2 duration-300 text-slate-300 ${
 								isNameValid(formData.name)
 									? "border-green-500"
 									: "border-red-500"
@@ -205,7 +138,7 @@ const SignUp = () => {
 							required={true}
 							onChange={handleInputChange}
 							name="email"
-							className={`border-2 duration-300 ${
+							className={`border-2 duration-300 text-slate-300 ${
 								isEmailValid(formData.email)
 									? "border-green-500"
 									: "border-red-500"
@@ -225,7 +158,7 @@ const SignUp = () => {
 							required={true}
 							onChange={handleInputChange}
 							name="password"
-							className={`border-2 duration-300 ${
+							className={`border-2 duration-300 text-slate-300 ${
 								isPasswordValid(formData.password)
 									? "border-green-500"
 									: "border-red-500"
@@ -247,7 +180,7 @@ const SignUp = () => {
 							required={true}
 							onChange={handleInputChange}
 							name="confirmPassword"
-							className={`border-2 duration-300 ${
+							className={`border-2 duration-300 text-slate-300 ${
 								isConfirmPasswordValid(
 									formData.password,
 									formData.confirmPassword
@@ -289,7 +222,7 @@ const SignUp = () => {
 						className={`w-full h-12 bg-primary-btn text-xl flex items-center justify-center rounded-lg duration-300  ${
 							isReadyToRegister() === false
 								? "hover:brightness-95"
-								: "brightness-75"
+								: "brightness-75 cursor-not-allowed"
 						}`}
 						onClick={handleRegister}
 						disabled={isReadyToRegister()}
