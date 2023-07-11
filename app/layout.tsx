@@ -4,13 +4,15 @@ import { Metadata } from "next";
 import Session from "./session";
 import Navbar from "@component/Navbar";
 import Footer from "@component/Footer";
-import Providers from "../src/store/Provider";
+import MainAnimation from "@component/MainAnimation";
+import Providers from "@src/store/Provider";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Byte Chat",
-  description: `Welcome to ByteChat, the ultimate online community for programming enthusiasts! ByteChat provides a dynamic platform where users can connect, collaborate, and engage in meaningful discussions on a wide range of programming-related topics. Whether you're a seasoned developer or just starting your coding journey, ByteChat is the go-to destination to interact with like-minded individuals and expand your knowledge.
+    title: "Byte Chat",
+    description: `Welcome to ByteChat, the ultimate online community for programming enthusiasts! ByteChat provides a dynamic platform where users can connect, collaborate, and engage in meaningful discussions on a wide range of programming-related topics. Whether you're a seasoned developer or just starting your coding journey, ByteChat is the go-to destination to interact with like-minded individuals and expand your knowledge.
 
 	With our user-friendly interface, logging in and signing up on ByteChat is a breeze. Once you're in, a vibrant community of programmers awaits you. You can explore various chat rooms and join conversations focused on different programming languages, frameworks, algorithms, and software development practices. Exchange ideas, seek advice, or share your expertise with others who share your passion for coding.
 
@@ -20,10 +22,11 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({
-  children,
+    children,
 }: {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }) {
+
   return (
     <html lang="en" className="dark">
       {/* <Provider store={store}> */}
@@ -41,4 +44,5 @@ export default async function RootLayout({
       {/* </Provider> */}
     </html>
   );
+
 }

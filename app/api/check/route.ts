@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 export async function GET(req: NextRequest) {
+
   const oAuthToken = await getToken({ req });
   if (oAuthToken) {
     return NextResponse.json(
@@ -25,4 +26,5 @@ export async function GET(req: NextRequest) {
     },
     { status: data?.status }
   );
+
 }
