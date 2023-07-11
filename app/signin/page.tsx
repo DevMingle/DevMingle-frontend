@@ -4,6 +4,7 @@ import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import Image from "next/image";
 import Link from "next/link";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { github, google } from "@/src/utils/oAuth";
 import { Logo } from "@/public";
 import { encodeToken } from "@/src/utils/jwt";
@@ -58,7 +59,7 @@ const SignIn = () => {
         body: JSON.stringify({ email: Email, password: Password }),
       });
       const data = await res.json();
-      console.log(data)
+      console.log(data);
       if (data.status === 402) return alert(data.message);
       if (data.success) {
         dispatch(setUser(data.user as userType));
@@ -166,7 +167,7 @@ const SignIn = () => {
           </div>
           <div
             className="flex items-center justify-center gap-4 border-slate-600 hover:bg-slate-600 cursor-pointer rounded-lg border-2 p-3 duration-300"
-            onClick={github}
+            onClick={() => signIn("github")}
           >
             <AiFillGithub className="text-3xl" />
             Github

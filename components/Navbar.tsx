@@ -55,6 +55,7 @@ const NavItem = ({
           method: "GET",
         });
         const data = await res.json();
+        console.log(data)
         if (data.success) {
           dispatch(setUser(data.user as userType));
         } else {

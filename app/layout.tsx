@@ -1,9 +1,10 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { Metadata } from "next";
+import Session from "./session";
 import Navbar from "@component/Navbar";
 import Footer from "@component/Footer";
-import Providers from '../src/store/Provider'
+import Providers from "../src/store/Provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,15 +27,17 @@ export default async function RootLayout({
   return (
     <html lang="en" className="dark">
       {/* <Provider store={store}> */}
+      <Session>
         <body
           className={`${inter.className} dark:bg-bg-dark dark:text-text-dark`}
         >
           <Providers>
-          <Navbar />
-          {children}
-          <Footer />
+            <Navbar />
+            {children}
+            <Footer />
           </Providers>
         </body>
+      </Session>
       {/* </Provider> */}
     </html>
   );
