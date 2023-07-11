@@ -1,10 +1,12 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { Metadata } from "next";
+import Session from "./session";
 import Navbar from "@component/Navbar";
 import Footer from "@component/Footer";
 import MainAnimation from "@component/MainAnimation";
 import Providers from "@src/store/Provider";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,18 +26,23 @@ export default async function RootLayout({
 }: {
     children: React.ReactNode;
 }) {
-    return (
-        <html lang="en" className="dark">
-            <body
-                className={`${inter.className} dark:bg-bg-dark dark:text-text-dark`}
-            >
-                <Providers>
-                    {/* <MainAnimation /> */}
-                    <Navbar />
-                    {children}
-                    <Footer />
-                </Providers>
-            </body>
-        </html>
-    );
+
+  return (
+    <html lang="en" className="dark">
+      {/* <Provider store={store}> */}
+      <Session>
+        <body
+          className={`${inter.className} dark:bg-bg-dark dark:text-text-dark`}
+        >
+          <Providers>
+            <Navbar />
+            {children}
+            <Footer />
+          </Providers>
+        </body>
+      </Session>
+      {/* </Provider> */}
+    </html>
+  );
+
 }

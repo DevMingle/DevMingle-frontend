@@ -33,6 +33,8 @@ const NavItems: { name: string; href: string }[] = [
     },
 ];
 
+          
+
 const NavItem = ({ name, href }: { name: string; href: string }) => {
     return (
         <Link href={href} className="group transition duration-300">
@@ -40,6 +42,7 @@ const NavItem = ({ name, href }: { name: string; href: string }) => {
             <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-purple-500"></span>
         </Link>
     );
+
 };
 
 const Navbar = () => {

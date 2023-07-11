@@ -36,7 +36,7 @@ const SignIn = () => {
     const [Password, setPassword] = useState("");
     const dispatch = useAppDispatch();
     const status = useAppSelector((state) => state.userReducer.status);
-
+  
     const isReadyToSignIn = () => {
         if (isEmailValid(Email) && isPasswordValid(Password)) {
             return false;
@@ -104,6 +104,7 @@ const SignIn = () => {
                 draggable
                 pauseOnHover
                 theme="dark"
+
             />
             <div className="flex flex-col justify-center gap-10">
                 <div className="flex items-center justify-center flex-col gap-5">
