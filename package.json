@@ -10,6 +10,21 @@
 	},
 	"dependencies": {
 		"@reduxjs/toolkit": "^1.9.5",
+<<<<<<< HEAD
+=======
+		"@types/next-auth": "^3.15.0",
+		"@types/react-redux": "^7.1.25",
+		"jsonwebtoken": "~8.5.1",
+		"next": "13.4.7",
+		"next-auth": "^4.22.1",
+		"next-redux-wrapper": "^8.1.0",
+		"react": "18.2.0",
+		"react-dom": "18.2.0",
+		"react-redux": "^8.1.1",
+		"toolkit": "link:@types/@reduxjs/toolkit"
+	},
+	"devDependencies": {
+>>>>>>> c428c1f7d0651a6ca5d3e72b9e41ebcc62d3cdb3
 		"@types/jsonwebtoken": "^9.0.2",
 		"@types/node": "20.3.1",
 		"@types/react": "18.2.13",
