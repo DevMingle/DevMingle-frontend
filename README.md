@@ -11,7 +11,3 @@ Made by:
 - [<b>KartikeyKakaria</b>](https://github.com/KartikeyKakaria)
 - [<b>Hero-codes</b>](https://github.com/Hero-codes)
 </p>
-<<<<<<< HEAD
-
-=======
->>>>>>> c428c1f7d0651a6ca5d3e72b9e41ebcc62d3cdb3
