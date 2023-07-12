@@ -7,7 +7,7 @@ interface response {
 
 const getQuestions = async (sortBy: string, filter: string | {}) => {
     const _questions = await fetch(
-        process.env.base_url + "/api/questions/getQuestions",
+        process.env.NEXT_PUBLIC_BACKEND_URL + "/questions/getQuestions",
         {
             method: "POST",
             body: JSON.stringify({ sortBy, filter }),

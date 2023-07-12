@@ -60,7 +60,9 @@ const questionCard = ({ question }: { question: Question }) => {
                 </div>
             </div>
             <div
-                className="absolute top-6 right-6 text-4xl hover:scale-110 flex justify-center items-center gap-3 border-primary-btn hover:bg-primary-btn duration-300 border-2 px-3 py-1 rounded-md"
+                className={`absolute top-6 right-6 text-4xl hover:scale-110 flex justify-center items-center gap-3 border-primary-btn hover:bg-primary-btn duration-300 border-2 px-3 py-1 rounded-md ${
+                    liked ? "bg-primary-btn" : ""
+                }`}
                 onClick={() => setLiked(!liked)}
             >
                 <div className="text-2xl">{question.likes}</div>
