@@ -7,7 +7,6 @@ import Footer from "@component/Footer";
 import MainAnimation from "@component/MainAnimation";
 import Providers from "@src/store/Provider";
 
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -26,23 +25,23 @@ export default async function RootLayout({
 }: {
     children: React.ReactNode;
 }) {
-
-  return (
-    <html lang="en" className="dark">
-      {/* <Provider store={store}> */}
-      <Session>
-        <body
-          className={`${inter.className} dark:bg-bg-dark dark:text-text-dark`}
-        >
-          <Providers>
-            <Navbar />
-            {children}
-            <Footer />
-          </Providers>
-        </body>
-      </Session>
-      {/* </Provider> */}
-    </html>
-  );
-
+    return (
+        <html lang="en" className="dark">
+            {/* <Provider store={store}> */}
+            <body
+                className={`${inter.className} dark:bg-bg-dark dark:text-text-dark`}
+            >
+                <Providers>
+                    <Session>
+                        <div>
+                            <Navbar />
+                            {children}
+                            <Footer />
+                        </div>
+                    </Session>
+                </Providers>
+            </body>
+            {/* </Provider> */}
+        </html>
+    );
 }
