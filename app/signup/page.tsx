@@ -15,6 +15,7 @@ import {
     startLoading,
     setError,
 } from "../../src/store/features/userSlice";
+import { useRouter } from "next/navigation";
 
 const isNameValid = (name: string) => {
     return name.length >= 3;
@@ -40,6 +41,11 @@ const isConfirmPasswordValid = (password: string, confirmPassword: string) => {
 };
 
 const SignUp = () => {
+    // const user = useAppSelector((state) => state.userReducer.user);
+    // const { push } = useRouter();
+    // if (user) {
+    //     push("/user/me");
+    // }
     const dispatch = useAppDispatch();
     const status = useAppSelector((state) => state.userReducer.status);
     const [formData, setFormData] = useState({

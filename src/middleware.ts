@@ -4,9 +4,15 @@ import { NextRequest, NextResponse } from "next/server";
 export async function middleware(req: NextRequest) {
     const oAuthToken = await getToken({ req });
     const token = req.cookies.get("jwt");
-    console.log(oAuthToken, token, "middleware");
     if (!oAuthToken && !token) {
         return NextResponse.redirect(new URL("/signin", req.url));
+    }
+    console.log(req.nextUrl.pathname);
+    if (
+        req.nextUrl.pathname.startsWith("/signin") ||
+        req.nextUrl.pathname.startsWith("/signup")
+    ) {
+        return NextResponse.redirect(new URL("/user/me", req.url));
     }
 }
 
