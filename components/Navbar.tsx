@@ -6,13 +6,8 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaBars } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
-import { useAppDispatch, useAppSelector } from "../src/store/hooks";
-import {
-    setUser,
-    startLoading,
-    setError,
-} from "../src/store/features/userSlice";
-import { userType } from "@/src/utils/types";
+import { useAppSelector } from "@/src/store/hooks";
+import { signOut } from "next-auth/react";
 
 const NavItems: { name: string; href: string }[] = [
     {
@@ -33,8 +28,6 @@ const NavItems: { name: string; href: string }[] = [
     },
 ];
 
-          
-
 const NavItem = ({ name, href }: { name: string; href: string }) => {
     return (
         <Link href={href} className="group transition duration-300">
@@ -42,31 +35,11 @@ const NavItem = ({ name, href }: { name: string; href: string }) => {
             <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-purple-500"></span>
         </Link>
     );
-
 };
 
 const Navbar = () => {
-    const dispatch = useAppDispatch();
-    useEffect(() => {
-        const getUser = async () => {
-            try {
-                dispatch(startLoading());
-                const res = await fetch("/api/check", {
-                    method: "GET",
-                });
-                const data = await res.json();
-                if (data.success) {
-                    dispatch(setUser(data.user as userType));
-                } else {
-                    dispatch(setError(data.message || "Couldn't load user"));
-                }
-            } catch (error) {
-                dispatch(setError(String(error)));
-            }
-        };
-        getUser();
-    }, []);
     const [showMenu, setShowMenu] = useState(false);
+    const loggedIn = useAppSelector((state) => state.userReducer.user);
     return (
         <section className="dark:bg-dark-nav sticky top-0 z-50 shadow-lg">
             <div className="container mx-auto flex flex-wrap px-8 py-6 flex-row items-center justify-center md:justify-normal gap-6">
@@ -96,8 +69,11 @@ const Navbar = () => {
                     })}
                 </nav>
                 <Link href="/signup">
-                    <button className="btn border-primary-btn hover:border-primary-btn hover:bg-primary-btn duration-300 hidden md:block">
-                        Sign Up
+                    <button
+                        onClick={() => loggedIn && signOut()}
+                        className="btn border-primary-btn hover:border-primary-btn hover:bg-primary-btn duration-300 hidden md:block"
+                    >
+                        {loggedIn ? "Log out" : "Sign Up"}
                     </button>
                 </Link>
                 <div

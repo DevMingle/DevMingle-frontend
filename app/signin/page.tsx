@@ -17,6 +17,7 @@ import {
     setError,
 } from "@/src/store/features/userSlice";
 import { userType } from "@/src/utils/types";
+import { redirect } from "next/dist/server/api-utils";
 
 const isEmailValid = (email: string) => {
     const emailRegex =
@@ -33,6 +34,8 @@ const isPasswordValid = (password: string) => {
 };
 
 const SignIn = () => {
+    const user = useAppSelector(state=>state.userReducer.user)
+    
     const [Email, setEmail] = useState("");
     const [Password, setPassword] = useState("");
     const dispatch = useAppDispatch();
