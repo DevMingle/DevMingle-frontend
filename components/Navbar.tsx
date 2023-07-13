@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Logo } from "@/public";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaBars } from "react-icons/fa";
+import { FaBars, FaUser } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
 import { useAppSelector } from "@/src/store/hooks";
 import { signOut } from "next-auth/react";
@@ -68,14 +68,19 @@ const Navbar = () => {
                         );
                     })}
                 </nav>
-                <Link href="/signup">
-                    <button
-                        onClick={() => loggedIn && signOut()}
-                        className="btn border-primary-btn hover:border-primary-btn hover:bg-primary-btn duration-300 hidden md:block"
-                    >
-                        {loggedIn ? "Log out" : "Sign Up"}
-                    </button>
-                </Link>
+                {loggedIn ? (
+                    <Link href="/user/settings">
+                        <div className="text-3xl text-primary-btn hover:text-text-dark/75 hover:scale-110 rounded-full hover:bg-primary-btn duration-300 p-2 border-2 border-primary-btn">
+                            <FaUser />
+                        </div>
+                    </Link>
+                ) : (
+                    <Link href="/signup">
+                        <button className="btn border-primary-btn hover:border-primary-btn hover:bg-primary-btn duration-300 hidden md:block">
+                            Sign Up
+                        </button>
+                    </Link>
+                )}
                 <div
                     className="absolute px-4 py-2 md:hidden top-8 right-4 text-3xl"
                     onClick={() => setShowMenu(!showMenu)}
