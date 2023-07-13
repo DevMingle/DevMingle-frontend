@@ -27,19 +27,19 @@ export default async function RootLayout({
 }) {
     return (
         <html lang="en" className="dark">
-            <Providers>
-                <Session>
-                    <body
-                        className={`${inter.className} dark:bg-bg-dark dark:text-text-dark`}
-                    >
-                        <Providers>
+            <body
+                className={`${inter.className} dark:bg-bg-dark dark:text-text-dark`}
+            >
+                <Providers>
+                    <Session>
+                        <div>
                             <Navbar />
                             {children}
                             <Footer />
-                        </Providers>
-                    </body>
-                </Session>
-            </Providers>
+                        </div>
+                    </Session>
+                </Providers>
+            </body>
         </html>
     );
 }

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import Image from "next/image";
@@ -17,6 +17,8 @@ import {
     setError,
 } from "@/src/store/features/userSlice";
 import { userType } from "@/src/utils/types";
+import { redirect } from "next/dist/server/api-utils";
+import { useRouter } from "next/navigation";
 
 const isEmailValid = (email: string) => {
     const emailRegex =
@@ -33,6 +35,12 @@ const isPasswordValid = (password: string) => {
 };
 
 const SignIn = () => {
+    // const user = useAppSelector((state) => state.userReducer.user);
+    // const router = useRouter();
+
+    // if (user) {
+    //     router.push("/user/me");
+    // }
     const [Email, setEmail] = useState("");
     const [Password, setPassword] = useState("");
     const dispatch = useAppDispatch();
@@ -47,12 +55,12 @@ const SignIn = () => {
     };
     const login = async () => {
         if (!Email || !Password) return alert("Please enter both the fields");
-        const res = await fetch("http://localhost:8000/api/auth/login", {
+        const res = await fetch("/api/login", {
             method: "POST",
             headers: {
                 "Content-type": "application/json",
             },
-            body: JSON.stringify({ Email, Password }),
+            body: JSON.stringify({ email:Email, password:Password }),
         });
         const data = await res.json();
         if (data.status === 402)
@@ -105,7 +113,6 @@ const SignIn = () => {
                 draggable
                 pauseOnHover
                 theme="dark"
-
             />
             <div className="flex flex-col justify-center gap-10">
                 <div className="flex items-center justify-center flex-col gap-5">
