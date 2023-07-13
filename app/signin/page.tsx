@@ -5,6 +5,7 @@ import { FcGoogle } from "react-icons/fc";
 import Image from "next/image";
 import Link from "next/link";
 import { github, google } from "@/src/utils/oAuth";
+import { signOut } from "next-auth/react";
 import { Logo } from "@/public";
 import { encodeToken } from "@/src/utils/jwt";
 import "react-toastify/dist/ReactToastify.css";
@@ -36,7 +37,7 @@ const SignIn = () => {
     const [Password, setPassword] = useState("");
     const dispatch = useAppDispatch();
     const status = useAppSelector((state) => state.userReducer.status);
-  
+
     const isReadyToSignIn = () => {
         if (isEmailValid(Email) && isPasswordValid(Password)) {
             return false;
