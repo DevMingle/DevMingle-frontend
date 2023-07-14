@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function middleware(req: NextRequest) {
     const oAuthToken = await getToken({ req });
     const token = req.cookies.get("jwt");
-    if (!oAuthToken && !token) {
+    if (!oAuthToken && (!token || token.value === "" )) {
         if (
             req.nextUrl.pathname.includes("/user") &&
             !req.nextUrl.pathname.includes("/profile")
