@@ -1,21 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { getToken } from "next-auth/jwt";
+import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 
 export async function POST(req: NextRequest) {
-  let token: unknown = req.cookies.get("jwt");
+  let token:RequestCookie | undefined = req.cookies.get("jwt");
   const oAuthToken = await getToken({ req });
-  if (oAuthToken) token = oAuthToken.token;
+  if (oAuthToken) token = (oAuthToken?.token as RequestCookie);
   
   const { url, method, body } = await req.json();
+  console.log(url, method, body);
+  
   try {
     const res = await fetch(`${process.env.BACKEND_URL}/${url}`, {
       method,
       headers: {
         "Content-type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token?.value}`,
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify(body), 
     });
     const data = await res.json();
     return NextResponse.json(
