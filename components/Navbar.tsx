@@ -70,7 +70,7 @@ const Navbar = () => {
                 </nav>
                 {loggedIn ? (
                     <Link href="/user/settings">
-                        <div className="text-3xl text-primary-btn hover:text-text-dark/75 hover:scale-110 rounded-full hover:bg-primary-btn duration-300 p-2 border-2 border-primary-btn">
+                        <div className="text-3xl text-primary-btn hover:text-text-dark/40 rounded-full hover:bg-primary-btn duration-300 p-2 border-2 border-primary-btn">
                             <FaUser />
                         </div>
                     </Link>

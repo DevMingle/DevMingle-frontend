@@ -21,7 +21,7 @@ const questionCard = ({ question }: { question: Question }) => {
     };
     return (
         <div className="w-full flex justify-center gap-5 relative flex-col bg-slate-700 p-6 rounded-xl shadow-2xl">
-            <Link href={`/user/question/${question._id}`}>
+            <Link href={`/user/question/${question._id}`} className="w-fit">
                 <div className="font-bold text-3xl hover:text-primary-btn duration-150 hover:brightness-150">
                     {question.question}
                 </div>

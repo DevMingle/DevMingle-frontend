@@ -15,7 +15,6 @@ import ReactMarkdown from "react-markdown";
 import { Prism } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkgfm from "remark-gfm";
-import { MdAssignmentTurnedIn } from "react-icons/md";
 
 const Page = ({ params }: { params: { questionID: string } }) => {
     const [liked, setLiked] = useState(false);
@@ -84,99 +83,123 @@ console.log("hello world");
                             consectetur tempora minima doloribus illum fugiat
                             provident nihil, porro voluptate consequuntur quasi.
                         </div>
-                        <div className="border-slate-600 border-2 rounded-lg collapse collapse-arrow bg-base-200">
-                            <input
-                                type="radio"
-                                name="my-accordion-2"
-                                checked={true}
-                            />
-                            <div className="collapse-title text-2xl font-medium">
-                                Description of question
+                        <div className="flex gap-10">
+                            <div className="border-2 border-slate-600 rounded-xl flex flex-col items-center justify-center gap-8 w-1/2">
+                                <div className="text-2xl font-semibold text-slate-400 mx-auto">
+                                    Description
+                                </div>
                             </div>
-                            <div className="collapse-content p-4">
-                                <div className="prose lg:prose-xl">
-                                    <ReactMarkdown
-                                        children={str}
-                                        remarkPlugins={[remarkgfm]}
-                                        components={{
-                                            code({
-                                                node,
-                                                inline,
-                                                className,
-                                                children,
-                                                ...props
-                                            }) {
-                                                const match =
-                                                    /language-(\w+)/.exec(
-                                                        className || ""
-                                                    );
-                                                return !inline && match ? (
-                                                    <Prism
-                                                        {...props}
-                                                        children={String(
-                                                            children
-                                                        ).replace(/\n$/, "")}
-                                                        style={oneDark}
-                                                        language={match[1]}
-                                                        PreTag="div"
-                                                    />
-                                                ) : (
-                                                    <code
-                                                        {...props}
-                                                        className={className}
-                                                    >
-                                                        {children}
-                                                    </code>
-                                                );
-                                            },
-                                        }}
-                                    />
+                            <div className="border-2 border-slate-600 rounded-xl flex flex-col items-center justify-center gap-8 w-1/2">
+                                <div className="text-2xl font-semibold text-slate-400">
+                                    Solution
                                 </div>
                             </div>
                         </div>
-                        <div className="border-slate-600 border-2 rounded-lg collapse collapse-arrow bg-base-200">
-                            <input type="radio" name="my-accordion-2" />
-                            <div className="collapse-title text-2xl font-medium">
-                                Solution of question
-                            </div>
-                            <div className="collapse-content p-4">
-                                <div className="prose lg:prose-xl">
-                                    <ReactMarkdown
-                                        children={question.answer}
-                                        remarkPlugins={[remarkgfm]}
-                                        components={{
-                                            code({
-                                                node,
-                                                inline,
-                                                className,
-                                                children,
-                                                ...props
-                                            }) {
-                                                const match =
-                                                    /language-(\w+)/.exec(
-                                                        className || ""
+                        {/* <div className="min-h-[60vh] flex gap-10">
+                            <div className="border-slate-600 border-2 rounded-lg collapse collapse-arrow bg-base-200">
+                                <input
+                                    type="radio"
+                                    name="my-accordion-2"
+                                    checked={true}
+                                />
+                                <div className="collapse-title text-2xl font-medium">
+                                    Description of question
+                                </div>
+                                <div className="collapse-content">
+                                    <div className="prose lg:prose-xl">
+                                        <ReactMarkdown
+                                            children={str}
+                                            remarkPlugins={[remarkgfm]}
+                                            components={{
+                                                code({
+                                                    node,
+                                                    inline,
+                                                    className,
+                                                    children,
+                                                    ...props
+                                                }) {
+                                                    const match =
+                                                        /language-(\w+)/.exec(
+                                                            className || ""
+                                                        );
+                                                    return !inline && match ? (
+                                                        <Prism
+                                                            {...props}
+                                                            children={String(
+                                                                children
+                                                            ).replace(
+                                                                /\n$/,
+                                                                ""
+                                                            )}
+                                                            style={oneDark}
+                                                            language={match[1]}
+                                                            PreTag="div"
+                                                        />
+                                                    ) : (
+                                                        <code
+                                                            {...props}
+                                                            className={
+                                                                className
+                                                            }
+                                                        >
+                                                            {children}
+                                                        </code>
                                                     );
-                                                return !inline && match ? (
-                                                    <Prism
-                                                        {...props}
-                                                        children={String(
-                                                            children
-                                                        ).replace(/\n$/, "")}
-                                                        style={oneDark}
-                                                        language={match[1]}
-                                                        PreTag="div"
-                                                    />
-                                                ) : (
-                                                    <code
-                                                        {...props}
-                                                        className={className}
-                                                    >
-                                                        {children}
-                                                    </code>
-                                                );
-                                            },
-                                        }}
-                                    />
+                                                },
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="border-slate-600 border-2 rounded-lg collapse collapse-arrow bg-base-200">
+                                <input type="radio" name="my-accordion-2" />
+                                <div className="collapse-title text-2xl font-medium">
+                                    Solution of question
+                                </div>
+                                <div className="collapse-content ">
+                                    <div className="prose lg:prose-xl">
+                                        <ReactMarkdown
+                                            children={question.answer}
+                                            remarkPlugins={[remarkgfm]}
+                                            components={{
+                                                code({
+                                                    node,
+                                                    inline,
+                                                    className,
+                                                    children,
+                                                    ...props
+                                                }) {
+                                                    const match =
+                                                        /language-(\w+)/.exec(
+                                                            className || ""
+                                                        );
+                                                    return !inline && match ? (
+                                                        <Prism
+                                                            {...props}
+                                                            children={String(
+                                                                children
+                                                            ).replace(
+                                                                /\n$/,
+                                                                ""
+                                                            )}
+                                                            style={oneDark}
+                                                            language={match[1]}
+                                                            PreTag="div"
+                                                        />
+                                                    ) : (
+                                                        <code
+                                                            {...props}
+                                                            className={
+                                                                className
+                                                            }
+                                                        >
+                                                            {children}
+                                                        </code>
+                                                    );
+                                                },
+                                            }}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -202,7 +225,7 @@ console.log("hello world");
                             <div className="font-bold text-xl text-slate-400 flex items-center justify-center gap-3">
                                 <BsFillPencilFill /> {question.madeBy}
                             </div>
-                        </div>
+                        </div> */}
                     </>
                 ) : (
                     <div className="flex items-center justify-center h-full">
