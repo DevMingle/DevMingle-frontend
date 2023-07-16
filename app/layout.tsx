@@ -6,6 +6,11 @@ import Navbar from "@component/Navbar";
 import Footer from "@component/Footer";
 import MainAnimation from "@component/MainAnimation";
 import Providers from "@src/store/Provider";
+import axios from "axios";
+import { getServerSession } from "next-auth/next";
+import { cookies } from "next/headers";
+import { nextAuthOptions } from "./api/auth/[...nextauth]/route";
+import { userType } from "@/src/utils/types";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,13 +30,39 @@ export default async function RootLayout({
 }: {
     children: React.ReactNode;
 }) {
+    const oAuthToken: {
+        token: string;
+    } | null = await getServerSession(nextAuthOptions);
+    let token = cookies().get("jwt")?.value;
+    if (oAuthToken) token = oAuthToken.token;
+    let clientUser: userType | null, error: boolean, errMsg: undefined | string;
+    try {
+        const {
+            data: { user },
+        }: {
+            data: {
+                user: userType | null;
+            };
+        } = await axios.get(`${process.env.BACKEND_URL}/auth/check`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        error = false;
+        clientUser = user;
+    } catch (err) {
+        console.log(err);
+        error = true;
+        clientUser = null;
+        errMsg = String(err);
+    }
     return (
         <html lang="en" className="dark">
             <body
                 className={`${inter.className} dark:bg-bg-dark dark:text-text-dark`}
             >
                 <Providers>
-                    <Session>
+                    <Session user={clientUser} error={error} errMsg={errMsg}>
                         <div>
                             <Navbar />
                             {children}

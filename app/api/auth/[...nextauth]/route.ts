@@ -1,8 +1,11 @@
-import NextAuth from "next-auth";
+import NextAuth, {NextAuthOptions} from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import axios from "axios";
-const handler = NextAuth({
+import { Session } from "inspector";
+
+
+export const nextAuthOptions:NextAuthOptions = {
     providers: [
         GithubProvider({
             clientSecret:
@@ -24,9 +27,7 @@ const handler = NextAuth({
                         ...token,
                     }
                 );
-                console.log(data.success)
                 if (data.success) {
-                    console.log(data.user, "\n\n\n ");
                     return { user: data.user, token: data.token };
                 }
                 return token;
@@ -34,7 +35,11 @@ const handler = NextAuth({
                 return token;
             }
         },
+        async session({session, token, user}){
+            return (token as typeof token & Session);
+        }
     },
-});
+}
+const handler = NextAuth(nextAuthOptions);
 
 export { handler as GET, handler as POST };
