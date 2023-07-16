@@ -25,24 +25,6 @@ export default function Session({
     }else{
         dispatch(setError(errMsg || "Sorry, but we are facing some problems today"))
     }
-    // useEffect(() => {
-    //     const getUser = async () => {
-    //         try {
-    //             dispatch(startLoading());
-    //             const res = await fetch("/api/check", {
-    //                 method: "GET",
-    //             });
-    //             const data = await res.json();
-    //             if (data.success) {
-    //                 dispatch(setUser(data.user));
-    //             } else {
-    //                 dispatch(setError(data.message || "Couldn't load user"));
-    //             }
-    //         } catch (error) {
-    //             dispatch(setError(String(error)));
-    //         }
-    //     };
-    //     getUser();
-    // }, []);
+   
     return <SessionProvider>{children}</SessionProvider>;
 }
