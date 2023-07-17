@@ -17,9 +17,7 @@ import {
     setError,
 } from "@/src/store/features/userSlice";
 import { userType } from "@/src/utils/types";
-import { redirect } from "next/dist/server/api-utils";
-import { useRouter } from "next/navigation";
-
+import { redirect } from "next/navigation";
 const isEmailValid = (email: string) => {
     const emailRegex =
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -35,12 +33,6 @@ const isPasswordValid = (password: string) => {
 };
 
 const SignIn = () => {
-    // const user = useAppSelector((state) => state.userReducer.user);
-    // const router = useRouter();
-
-    // if (user) {
-    //     router.push("/user/me");
-    // }
     const [Email, setEmail] = useState("");
     const [Password, setPassword] = useState("");
     const dispatch = useAppDispatch();
@@ -54,17 +46,8 @@ const SignIn = () => {
         }
     };
     const login = async () => {
-        if (!Email || !Password) return alert("Please enter both the fields");
-        const res = await fetch("/api/login", {
-            method: "POST",
-            headers: {
-                "Content-type": "application/json",
-            },
-            body: JSON.stringify({ email:Email, password:Password }),
-        });
-        const data = await res.json();
-        if (data.status === 402)
-            return toast.error(data.message, {
+        if (!Email || !Password)
+            return toast.error("Please enter both the fields", {
                 position: "top-center",
                 autoClose: 3000,
                 hideProgressBar: false,
@@ -74,11 +57,7 @@ const SignIn = () => {
                 progress: undefined,
                 theme: "dark",
             });
-        if (data.success) {
-            const clientToken = encodeToken(data.token);
-            localStorage.setItem("jwt", clientToken);
-            console.log(data);
-        }
+
         try {
             dispatch(startLoading());
             const res = await fetch("/api/login", {
@@ -90,14 +69,51 @@ const SignIn = () => {
             });
             const data = await res.json();
             console.log(data);
-            if (data.status === 402) return alert(data.message);
+            if (data.status === 402) {
+                dispatch(setError(data.message as string));
+                return toast.error(data.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
+            }
             if (data.success) {
                 dispatch(setUser(data.user as userType));
+                return redirect("/user/me");
             } else {
                 dispatch(setError(data.message as string));
+                return toast.error(data.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
             }
         } catch (err) {
+            console.log(err);
             dispatch(setError(String(err)));
+            return toast.error(
+                "Sorry but we are facing some issues, please try again later",
+                {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                }
+            );
         }
     };
     return (
