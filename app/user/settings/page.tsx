@@ -4,7 +4,6 @@ import axios from "axios";
 import { signOut } from "next-auth/react";
 import { useAppDispatch, useAppSelector } from "@/src/store/hooks";
 import { setUser } from "@/src/store/features/userSlice";
-import { redirect } from "next/navigation";
 
 const page = () => {
     const dispatch = useAppDispatch();
@@ -19,7 +18,7 @@ const page = () => {
         }
         if (data.success) {
             dispatch(setUser(null));
-            return redirect("/signin");
+            window.location.href = '/signin'
         }
     };
     const fetchEdit = async () => {

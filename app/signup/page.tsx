@@ -161,6 +161,7 @@ const SignUp = () => {
                     theme: "dark",
                 });
             dispatch(setUser(data.user as userType));
+            window.Geolocation.href='/user/me'
         } catch (err) {
             dispatch(setError(String(err)));
         }

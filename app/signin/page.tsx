@@ -17,7 +17,7 @@ import {
     setError,
 } from "@/src/store/features/userSlice";
 import { userType } from "@/src/utils/types";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 const isEmailValid = (email: string) => {
     const emailRegex =
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -84,7 +84,7 @@ const SignIn = () => {
             }
             if (data.success) {
                 dispatch(setUser(data.user as userType));
-                return redirect("/user/me");
+                window.location.href = '/user/me'
             } else {
                 dispatch(setError(data.message as string));
                 return toast.error(data.message, {
