@@ -8,6 +8,8 @@ export interface Question {
     madeBy: string;
     likes: number;
     _id: string;
+    type?: string;
+    availableTags?: {};
 }
 export interface userType {
     avatarImg: string;

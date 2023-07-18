@@ -4,49 +4,19 @@ import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import Image from "next/image";
 import Link from "next/link";
-import { github, google } from "@/src/utils/oAuth";
+import { github, google } from "@src/utils/oAuth";
 import { Logo } from "@/public";
-import "react-toastify/dist/ReactToastify.css";
-import { toast, ToastContainer } from "react-toastify";
-import { useAppDispatch, useAppSelector } from "../../src/store/hooks";
-import { userType } from "../../src/utils/types";
+import { useAppSelector } from "@src/store/hooks";
 import {
-    setUser,
-    startLoading,
-    setError,
-} from "../../src/store/features/userSlice";
-import { useRouter } from "next/navigation";
-
-const isNameValid = (name: string) => {
-    return name.length >= 3;
-};
-
-const isEmailValid = (email: string) => {
-    const emailRegex =
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (email.toLowerCase().match(emailRegex)) {
-        return true;
-    } else {
-        return false;
-    }
-};
-
-const isPasswordValid = (password: string) => {
-    return password.length >= 8;
-};
-
-const isConfirmPasswordValid = (password: string, confirmPassword: string) => {
-    if (password.length < 1) return false;
-    else return password === confirmPassword;
-};
+    isEmailValid,
+    isNameValid,
+    isPasswordValid,
+    isConfirmPasswordValid,
+    handleRegister,
+    isReadyToRegister,
+} from "@src/utils/user";
 
 const SignUp = () => {
-    // const user = useAppSelector((state) => state.userReducer.user);
-    // const { push } = useRouter();
-    // if (user) {
-    //     push("/user/me");
-    // }
-    const dispatch = useAppDispatch();
     const status = useAppSelector((state) => state.userReducer.status);
     const [formData, setFormData] = useState({
         name: "",
@@ -61,137 +31,8 @@ const SignUp = () => {
     }: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [target.name]: target.value });
     };
-    const handleRegister = async (e: React.MouseEvent<HTMLElement>) => {
-        const { name, email, password, confirmPassword } = formData;
-        if (name.length < 3) {
-            return toast.error("Please choose a valid name!", {
-                position: "top-center",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            });
-        }
-        if (
-            !email
-                .toLowerCase()
-                .match(
-                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                )
-        ) {
-            return toast.error("Please choose a valid email!", {
-                position: "top-center",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            });
-        }
-        if (password.length < 8) {
-            return toast.error("Plase choose a strong password!", {
-                position: "top-center",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            });
-        }
-        if (password !== confirmPassword) {
-            setFormData({
-                name: "",
-                email: "",
-                password: "",
-                confirmPassword: "",
-            });
-            return toast.error(
-                "Confirm password doesn't match with the password!",
-                {
-                    position: "top-center",
-                    autoClose: 2000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "dark",
-                }
-            );
-        }
-        if (!acceptedPolicy) {
-            return toast.error("Please accept our policy to continue!", {
-                position: "top-center",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            });
-        }
-        try {
-            dispatch(startLoading());
-            const res = await fetch("/api/register", {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            });
-            const data = await res.json();
-            console.log(data);
-            if (!data.success)
-                return toast.error(data.message, {
-                    position: "top-center",
-                    autoClose: 2000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "dark",
-                });
-            dispatch(setUser(data.user as userType));
-        } catch (err) {
-            dispatch(setError(String(err)));
-        }
-    };
-    const isReadyToRegister = () => {
-        if (
-            acceptedPolicy &&
-            isNameValid(formData.name) &&
-            isEmailValid(formData.email) &&
-            isPasswordValid(formData.password) &&
-            isConfirmPasswordValid(formData.password, formData.confirmPassword)
-        ) {
-            return false;
-        } else {
-            return true;
-        }
-    };
     return (
         <div className="min-h-screen flex flex-col justify-center items-center p-10">
-            <ToastContainer
-                position="top-center"
-                autoClose={2000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="dark"
-            />
             <div className="flex flex-col justify-center gap-10">
                 <div className="flex items-center justify-center flex-col gap-5">
                     <Image src={Logo} alt="loading..." width={70} height={30} />
@@ -314,12 +155,31 @@ const SignUp = () => {
                     </div>
                     <button
                         className={`w-full h-12 bg-primary-btn text-xl flex items-center justify-center rounded-lg duration-300  ${
-                            isReadyToRegister() === false
+                            isReadyToRegister(
+                                acceptedPolicy,
+                                formData.name,
+                                formData.email,
+                                formData.password,
+                                formData.confirmPassword
+                            ) === false
                                 ? "hover:brightness-95"
                                 : "brightness-75 cursor-not-allowed"
                         }`}
-                        onClick={handleRegister}
-                        disabled={isReadyToRegister()}
+                        onClick={() =>
+                            handleRegister(
+                                formData.name,
+                                formData.email,
+                                formData.password,
+                                formData.confirmPassword
+                            )
+                        }
+                        disabled={isReadyToRegister(
+                            acceptedPolicy,
+                            formData.name,
+                            formData.email,
+                            formData.password,
+                            formData.confirmPassword
+                        )}
                     >
                         {status === "loading" ? "Signin..." : "Sign Up"}
                     </button>
