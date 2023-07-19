@@ -14,6 +14,7 @@ module.exports = {
 				"secondary-btn": "#261a37",
 				"accent-dark": "#6f449c",
 				"dark-nav": "#262329",
+				"field":"#7711E3",
 			},
 		},
 	},
