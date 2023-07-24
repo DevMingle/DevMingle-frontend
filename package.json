@@ -36,7 +36,7 @@
 		"daisyui": "^3.1.5",
 		"eslint": "8.43.0",
 		"eslint-config-next": "13.4.7",
-		"framer-motion": "^10.12.17",
+		"framer-motion": "^10.13.1",
 		"postcss": "8.4.24",
 		"react-icons": "^4.10.1",
 		"react-spinners": "^0.13.8",
