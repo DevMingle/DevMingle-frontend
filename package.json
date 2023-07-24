@@ -37,7 +37,7 @@
 		"eslint": "8.43.0",
 		"eslint-config-next": "13.4.7",
 		"framer-motion": "^10.12.17",
-		"postcss": "8.4.24",
+		"postcss": "8.4.27",
 		"react-icons": "^4.10.1",
 		"react-spinners": "^0.13.8",
 		"react-toastify": "^9.1.3",
