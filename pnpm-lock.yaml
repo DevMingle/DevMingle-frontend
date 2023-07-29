@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@reduxjs/toolkit':
     specifier: ^1.9.5
@@ -49,6 +53,9 @@ dependencies:
   remark-gfm:
     specifier: ^3.0.1
     version: 3.0.1
+  sweetalert2:
+    specifier: ^11.7.20
+    version: 11.7.20
   toolkit:
     specifier: link:@types/@reduxjs/toolkit
     version: link:@types/@reduxjs/toolkit
@@ -3546,6 +3553,10 @@ packages:
   /supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+
+  /sweetalert2@11.7.20:
+    resolution: {integrity: sha512-GdU1TkiLpGGC0mcPV8bKmS7G0MR7caxambPkEU8zyepRSNR9EaEvIjNhX5QNkL0VFVzHbI3l12NtuEklkJ0D4Q==}
+    dev: false
 
   /synckit@0.8.5:
     resolution: {integrity: sha512-L1dapNV6vu2s/4Sputv8xGsCdAVlb5nRDMFU/E27D44l5U6cw1g0dGd45uLc+OXjNMmF4ntiMdCimzcjFKQI8Q==}

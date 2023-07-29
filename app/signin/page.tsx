@@ -5,9 +5,7 @@ import { FcGoogle } from "react-icons/fc";
 import Image from "next/image";
 import Link from "next/link";
 import { github, google } from "@/src/utils/oAuth";
-import { signOut } from "next-auth/react";
 import { Logo } from "@/public";
-import { encodeToken } from "@/src/utils/jwt";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "@/src/store/hooks";
@@ -17,7 +15,8 @@ import {
     setError,
 } from "@/src/store/features/userSlice";
 import { userType } from "@/src/utils/types";
-import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
+
 const isEmailValid = (email: string) => {
     const emailRegex =
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -83,8 +82,15 @@ const SignIn = () => {
                 });
             }
             if (data.success) {
-                dispatch(setUser(data.user as userType));
-                window.location.href = '/user/me'
+                Swal.fire({
+                    text: "You were signed in successfully",
+                    title: "Success!",
+                    icon: "success",
+                    confirmButtonText: "continue",
+                }).then(() => {
+                    dispatch(setUser(data.user as userType));
+                    window.location.href = "/user/me";
+                });
             } else {
                 dispatch(setError(data.message as string));
                 return toast.error(data.message, {

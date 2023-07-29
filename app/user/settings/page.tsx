@@ -4,21 +4,32 @@ import axios from "axios";
 import { signOut } from "next-auth/react";
 import { useAppDispatch, useAppSelector } from "@/src/store/hooks";
 import { setUser } from "@/src/store/features/userSlice";
+import Swal from "sweetalert2";
 
 const page = () => {
     const dispatch = useAppDispatch();
     const user = useAppSelector((state) => state.userReducer.user);
     const logout = async () => {
-        console.log("Logging out...");
-        const { data } = await axios.get("/api/logout");
-        if (data.oAuth) {
-            signOut({
-                callbackUrl: "/signin",
+        try {
+            console.log("Logging out...");
+            const { data } = await axios.get("/api/logout");
+            if (data.oAuth) {
+                signOut({
+                    callbackUrl: "/signin",
+                });
+            }
+            if (data.success) {
+                dispatch(setUser(null));
+                window.location.href = "/signin";
+            }
+        } catch (err) {
+            console.log(err)
+            Swal.fire({
+                title: "Error!",
+                text: "Sorry, we are facing some issues ,please try again later",
+                icon: "error",
+                confirmButtonText: "Go back",
             });
-        }
-        if (data.success) {
-            dispatch(setUser(null));
-            window.location.href = '/signin'
         }
     };
     const fetchEdit = async () => {

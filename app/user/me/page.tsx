@@ -1,7 +1,6 @@
 import { getUser } from "@/src/utils/getUser";
-
 export default async function User() {
-    const { user } = await getUser();
+    const { user, errMsg } = await getUser();
     if(!user){
         return <h1>PLEASE LOG IN</h1>
     }

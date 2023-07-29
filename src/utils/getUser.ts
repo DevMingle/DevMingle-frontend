@@ -15,6 +15,7 @@ export const getUser = cache(
         } | null = await getServerSession(nextAuthOptions);
         let token = cookies().get("jwt")?.value;
         if (oAuthToken) token = oAuthToken.token;
+        console.log(oAuthToken)
         try {
             const {
                 data: { user },
